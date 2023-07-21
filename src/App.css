@@ -1,38 +1,187 @@
 .App {
   text-align: center;
+  background-color: white;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.game {
+  width: 100vw;
+  height: calc(100vh - 200px);
   display: flex;
-  flex-direction: column;
   align-items: center;
+  padding-top: 20px;
+  flex-direction: column;
+}
+
+.keyboard {
+  width: 750px;
+  height: 750px;
+  margin-top: 50px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* border: 3px solid grey; */
 }
 
-.App-link {
-  color: #61dafb;
+.line0,
+.line1,
+.line2,
+.line3,
+.line4,
+.line5,
+.line6 {
+  flex: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.key {
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  border-radius: 6px;
+  border: 3px solid grey;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  background-color: white;
+  color: grey;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.dark_key {
+  border: 3px solid #444444;
+  color: #444444;
+}
+
+.mathsymbol_key {
+  border: 0px;
+  color: black;
+  font-size: 40px;
+  cursor: default;
+}
+
+.run_key {
+  border: 0px;
+  color: black;
+  font-size: 25px;
+  cursor: default;
+}
+
+.redcharacter_key {
+  color: red;
+}
+
+.blue_key {
+  background-color: rgb(125, 215, 255);
+}
+
+.red_key {
+  background-color: rgb(255, 100, 100);
+}
+
+.spacebar {
+  width: 360px;
+  font-size: 36px;
+}
+
+#selected_key {
+  border: 3px solid #444444;
+}
+
+.check-color {
+  color: green;
+}
+
+.times-color {
+  color: red;
+}
+
+.mini_key {
+  width: 30px;
+  height: 30px;
+  margin: 2px;
+  border-radius: 3px;
+  border: 1.5px solid #444444;
+  font-size: 20px;
+  color: #444444;
+}
+
+.mini_line1,
+.mini_line2,
+.mini_line3 {
+  flex: 33%;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  margin: 2px;
+}
+
+.dordle_box {
+  width: 400px;
+  height: 150px;
+  margin-top: 5px;
+  justify-content: center;
+  /* border: 3px solid grey; */
+}
+
+.divider {
+  font-size: 54px;
+  width: 20px;
+  height: 50px;
+  color: #444444;
+}
+
+.mini_divider {
+  font-size: 27px;
+  height: 25px;
+}
+
+.word_box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  color: #000;
+  width: 200px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.note_box {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+  flex-direction: column;
+  background-color: white;
+  color: #000;
+  width: 360px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.word_box_word {
+  margin: 0;
+}
+
+@keyframes flip {
+  0% {
+      transform: scaleY(1);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+      transform: scaleY(0);
+  }
+  100% {
+      transform: scaleY(1);
   }
 }
