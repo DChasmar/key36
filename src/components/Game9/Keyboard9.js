@@ -99,7 +99,8 @@ function Keyboard9() {
         let updatedKeys = [...keys0];
         const emptyIndex = updatedKeys.findIndex((val) => val === '');
         if (emptyIndex >= 0) {
-            updatedKeys[emptyIndex] = key.toUpperCase();        
+            updatedKeys[emptyIndex] = key.toUpperCase(); 
+            updatedKeys[updatedKeys.length - (emptyIndex + 1)] = key.toUpperCase();        
         }
         setKeys0(updatedKeys);
     }
@@ -109,8 +110,7 @@ function Keyboard9() {
         const emptyIndex = updatedKeys.findIndex((val) => val === '');
         if (emptyIndex > 0 && emptyIndex < 10) {
             updatedKeys[emptyIndex - 1] = '';
-        } else if (emptyIndex === -1) {
-            
+            updatedKeys[updatedKeys.length - emptyIndex] = ''; 
         }
         setKeys0(updatedKeys);
     }
@@ -180,7 +180,7 @@ function Keyboard9() {
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={0} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={0} guessKey />;
             })}</div>
             <div className='line1'>{keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;

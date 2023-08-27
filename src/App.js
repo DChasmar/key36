@@ -17,6 +17,25 @@ import KeyboardR from './components/GameR/KeyboardR';
 import KeyboardT from './components/GameT/KeyboardT';
 import KeyboardY from './components/GameY/KeyboardY';
 import KeyboardU from './components/GameU/KeyboardU';
+import KeyboardI from './components/GameI/KeyboardI';
+import KeyboardO from './components/GameO/KeyboardO';
+import KeyboardP from './components/GameP/KeyboardP';
+import KeyboardA from './components/GameA/KeyboardA';
+import KeyboardS from './components/GameS/KeyboardS';
+import KeyboardD from './components/GameD/KeyboardD';
+import KeyboardF from './components/GameF/KeyboardF';
+import KeyboardG from './components/GameG/KeyboardG';
+import KeyboardH from './components/GameH/KeyboardH';
+import KeyboardJ from './components/GameJ/KeyboardJ';
+import KeyboardK from './components/GameK/KeyboardK';
+import KeyboardL from './components/GameL/KeyboardL';
+import KeyboardZ from './components/GameZ/KeyboardZ';
+import KeyboardX from './components/GameX/KeyboardX';
+import KeyboardC from './components/GameC/KeyboardC';
+import KeyboardV from './components/GameV/KeyboardV';
+import KeyboardB from './components/GameB/KeyboardB';
+import KeyboardN from './components/GameN/KeyboardN';
+import KeyboardM from './components/GameM/KeyboardM';
 import { createContext, useEffect, useState } from 'react';
 
 export const AppContext = createContext();
@@ -77,6 +96,25 @@ function App() {
               'T': <KeyboardT />,
               'Y': <KeyboardY />,
               'U': <KeyboardU />,
+              'I': <KeyboardI />,
+              'O': <KeyboardO />,
+              'P': <KeyboardP />,
+              'A': <KeyboardA />,
+              'S': <KeyboardS />,
+              'D': <KeyboardD />,
+              'F': <KeyboardF />,
+              'G': <KeyboardG />,
+              'H': <KeyboardH />,
+              'J': <KeyboardJ />,
+              'K': <KeyboardK />,
+              'L': <KeyboardL />,
+              'Z': <KeyboardZ />,
+              'X': <KeyboardX />,
+              'C': <KeyboardC />,
+              'V': <KeyboardV />,
+              'B': <KeyboardB />,
+              'N': <KeyboardN />,
+              'M': <KeyboardM />,
               '': <Keyboard />,
             }[gameChosen.gameNumber]
           }

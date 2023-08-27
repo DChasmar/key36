@@ -126,8 +126,6 @@ function KeyboardY() {
             } else {
                 updatedKeys[emptyIndex - 1] = codeWords[counter][emptyIndex - 1];
             }
-        } else if (emptyIndex === -1) {
-            
         }
         setKeys0(updatedKeys);
     }

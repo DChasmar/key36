@@ -14,7 +14,7 @@ function DordleGuesses() {
         return (
           <React.Fragment key={uniqueKey}>
             <DordleBox keyVal={key} color={guessColors[0][index]} />
-            {index === 3 && turnCounter < 4 && <div className='divider mini_divider'>|</div>}
+            {index === 3 && <div className='divider mini_divider'>|</div>}
           </React.Fragment>
         );
       })}</div>
@@ -24,7 +24,7 @@ function DordleGuesses() {
         return (
           <React.Fragment key={uniqueKey}>
             <DordleBox keyVal={key} color={guessColors[1][index]} />
-            {index === 3 && turnCounter < 4 && <div className='divider mini_divider'>|</div>}
+            {index === 3 && <div className='divider mini_divider'>|</div>}
           </React.Fragment>
         );
       })}</div>
@@ -34,17 +34,7 @@ function DordleGuesses() {
         return (
           <React.Fragment key={uniqueKey}>
             <DordleBox keyVal={key} color={guessColors[2][index]} />
-            {index === 3 && turnCounter < 4 && <div className='divider mini_divider'>|</div>}
-          </React.Fragment>
-        );
-      })}</div>
-      <div className='mini_line3'>
-        {guesses[3].map((key, index) => {
-        const uniqueKey = `mini_line3-${index}`;
-        return (
-          <React.Fragment key={uniqueKey}>
-            <DordleBox keyVal={key} color={guessColors[3][index]} />
-            {index === 3 && turnCounter < 4 && <div className='divider mini_divider'>|</div>}
+            {index === 3 && <div className='divider mini_divider'>|</div>}
           </React.Fragment>
         );
       })}</div>

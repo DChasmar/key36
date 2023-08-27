@@ -1,19 +1,96 @@
-import React, { useCallback, useContext, useEffect, useState, createContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
 import Key from './Key1';
 import Spacebar from './Spacebar1';
+import words from './qwertyuiop_words.txt'
 
 export const Keyboard1Context = createContext();
 
 function Keyboard1() {
     const { setGameChosen, keys0Color, setKeys0Color } = useContext(AppContext);
-    const [keys0, setKeys0] = useState(["", "", "", "", "", "", "", "", "", ""]);
+    const [keys0, setKeys0] = useState([""]);
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
-    const keys2 = ["", "", "", "", "", "", "", "", ""];
-    const keys3 = ["", "", "", "", "", "", "",];
-    const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-    const validWords = ['TYPEWRITER', 'REPERTOIRE', 'PERPETUITY', 'PROPRIETOR', 'PEPPERWORT']
-    const [response, setResponse] = useState("")
+
+    const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+
+    const [symbolResponse, setSymbolResponse] = useState("");
+
+    const [wordList, setWordList] = useState([])
+    const [wordSet, setWordSet] = useState(new Set());
+
+    const disableKeyPressRef = useRef(false);
+
+    const generateWordSet = async () => {
+        const response = await fetch(words);
+        const result = await response.text();
+        const wordArr = result.split("\n");
+        const wordSet = new Set(wordArr);
+        return { wordSet };
+    }
+      
+    useEffect(() => {
+        const fetchData = async () => {
+          const { wordSet } = await generateWordSet();
+          setWordSet(wordSet);
+        };
+      
+        fetchData();
+    }, []);
+
+    const gameOver = () => {
+        let newKeys0Color = keys0Color;
+        newKeys0Color[0] = 1;
+        setKeys0Color(newKeys0Color);
+        setGameChosen({ gameChosen: false, gameNumber: '' });
+    }
+
+    const goodWord = () => {
+        setSymbolResponse("check");
+        disableKeyPressRef.current = true;
+        let newWordList = [...wordList];
+        newWordList.push(keys0.join(''));
+        setWordList(newWordList);
+        setTimeout(() => {
+            if (keys0.length < 10){
+                let length = keys0.length;
+                let updatedKeys0 = keys0;
+                for (let i = 0; i < length; i++) {
+                    updatedKeys0[i] = "";
+                }
+                updatedKeys0.push("");
+                setKeys0(updatedKeys0);
+            } else {
+                gameOver()
+            }
+            setSymbolResponse("");
+            disableKeyPressRef.current = false;
+        }, 500);
+    }
+
+    const badWord = () => {
+        setSymbolResponse("times");
+        disableKeyPressRef.current = true;
+        setTimeout(() => {
+            let length = keys0.length;
+            let updatedKeys0 = keys0
+            for (let i = 0; i < length; i++) {
+            updatedKeys0[i] = "";
+            }
+            setKeys0(updatedKeys0);
+            setSymbolResponse("");
+            disableKeyPressRef.current = false;
+        }, 500);
+    };
+
+    const checkWord = () => {
+        if (keys0.includes("")) return;
+        const wordGuess = keys0.join('');
+        if (wordSet.has(wordGuess.toLowerCase())) {
+            goodWord()
+        } else {
+            badWord()
+        }
+    };
 
     const addLetter = (key) => {
         let updatedKeys = [...keys0];
@@ -29,39 +106,19 @@ function Keyboard1() {
         const emptyIndex = updatedKeys.findIndex((val) => val === '');
         if (emptyIndex > 0 && emptyIndex < 10) {
             updatedKeys[emptyIndex - 1] = '';
-        } else if (emptyIndex === -1) {
-            updatedKeys[9] = '';
         }
         setKeys0(updatedKeys);
-    }
-
-    const checkWord = () => {
-        if (keys0.includes("")) return;
-        const wordGuess = keys0.join('')
-        if (validWords.includes(wordGuess)) {
-            setResponse("check");
-            setTimeout(() => {
-                let newKeys0Color = keys0Color;
-                newKeys0Color[0] = 1;
-                setKeys0Color(newKeys0Color);
-                setGameChosen({ gameChosen: false, gameNumber: '' });
-            }, 1000);
-        } else {
-            setResponse("times");
-            setTimeout(() => {
-                setKeys0(["", "", "", "", "", "", "", "", "", ""])
-                setResponse("");
-            }, 1000);
-        }
-    }
+    };
 
     useEffect(() => {
         checkWord()
     }, [keys0]);
 
     const handleKeyboard = useCallback((event) => {
-
-        if (event.key === "Backspace") {
+        if (disableKeyPressRef.current) {
+            event.preventDefault();
+            return;
+        } else if (event.key === "Backspace") {
             removeLetter()
         } else if (event.key === " ") {
             setGameChosen({gameChosen: false, gameNumber: ''});
@@ -96,23 +153,17 @@ function Keyboard1() {
                 checkWord}}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`; // Generate a unique key
-                return <Key keyVal={key} key={uniqueKey} keyLine={0} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={0} guessLine />;
             })}</div>
             <div className='line1'>{keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
                 return <Key keyVal={key} key={uniqueKey} keyLine={1} />;
             })}</div>
-            <div className='line2'>
-                {keys2.map((key, index) => {
-                const uniqueKey = `2-${index}`;
-                return <Key keyVal={key} key={uniqueKey} />;})}
-            </div>
-            <div className='line3'>{keys3.map((key, index) => {
-                const uniqueKey = `3-${index}`;
-                return <Key keyVal={key} key={uniqueKey} />;
-                })}
-            </div>
-            <div className='line4'>< Spacebar keyVal={response} /></div>
+            <div className='line2'>< Spacebar keyVal={symbolResponse} /></div>
+            <div className='word_box'>
+                {wordList.map((word, index) => (
+                    <p key={index} className="word_box_word" >{word}</p>
+            ))}</div>
             </Keyboard1Context.Provider>
         </div>
     )

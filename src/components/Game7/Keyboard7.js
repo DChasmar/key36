@@ -3,7 +3,8 @@ import { AppContext } from '../../App';
 import Key from './Key7';
 import Spacebar from './Spacebar7';
 import compoundWordBank from './CompoundWordList.txt';
-import fiveLetterWordBank from './FiveLetterWords.txt';
+import fiveLetterWordBank from '../FiveLetterWords.txt';
+import tenLetterWordBank from './TenLetterWords.txt';
 import DordleGuesses from './DordleGuesses7';
 
 export const Keyboard7Context = createContext();
@@ -41,7 +42,9 @@ function Keyboard7() {
 
     const [compoundWordSet, setCompoundWordSet] = useState(new Set());
     const [fiveLetterWordSet, setFiveLetterWordSet] = useState(new Set());
+    const [tenLetterWordSet, setTenLetterWordSet] = useState(new Set());
     const [correctWord, setCorrectWord] = useState("");
+    const [wordReveal, setWordReveal] = useState("");
 
     const [symbolResponse, setSymbolResponse] = useState("");
 
@@ -63,15 +66,25 @@ function Keyboard7() {
       const fiveLetterWordSet = new Set(wordArr);
       return { fiveLetterWordSet };
     }
+
+    const generateTenLetterWordSet = async () => {
+      const response = await fetch(tenLetterWordBank);
+      const result = await response.text();
+      const wordArr = result.split("\n");
+      const tenLetterWordSet = new Set(wordArr);
+      return { tenLetterWordSet };
+    }
     
     useEffect(() => {
       const fetchData = async () => {
         const compoundWords = await generateCompoundWordSet();
         const fiveLetterWords = await generateFiveLetterWordSet();
+        const tenLetterWords = await generateTenLetterWordSet();
     
         setCompoundWordSet(compoundWords.compoundWordSet);
         setCorrectWord(compoundWords.randomCompoundWord);
         setFiveLetterWordSet(fiveLetterWords.fiveLetterWordSet);
+        setTenLetterWordSet(tenLetterWords.tenLetterWordSet);
       };
     
       fetchData();
@@ -92,7 +105,7 @@ function Keyboard7() {
       setKeys0(updatedKeys);
     };
 
-    const removeLetter = (key) => {
+    const removeLetter = () => {
       let updatedKeys = [...keys0];
       const emptyIndex = updatedKeys.findIndex((val) => val === '');
       if (emptyIndex > 0 && emptyIndex < 10) {
@@ -169,28 +182,43 @@ function Keyboard7() {
         }, 1000);
       // Logic for final guess
       } else if (turnCounter === 3) {
-        setKeys0DordleColors(updatedGuessColors)
+        setKeys0DordleColors(updatedGuessColors);
         const hasNonGreenColors = updatedGuessColors.some(color => color !== 2);
         // Incorrect, so reset with new word
         if (hasNonGreenColors) {
           setSymbolResponse("times");
+          setWordReveal(correctWord);
           setTimeout(() => {
             const compoundWordArray = Array.from(compoundWordSet);
             const newCompoundWordSet = compoundWordArray.filter(word => word !== correctWord);
             const randomCompoundWord = newCompoundWordSet[Math.floor(Math.random() * newCompoundWordSet.length)];
-            setCorrectWord(randomCompoundWord)
+            setCorrectWord(randomCompoundWord);
             setKeys0DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-            setGuesses([["", "", "", "", "", "", "", "", "", ""],
+            setGuesses([
               ["", "", "", "", "", "", "", "", "", ""],
-              ["", "", "", "", "", "", "", "", "", ""]]);           
-            setGuessColors([[-1, -1, -1, -1, -1, -1, -1, -1, -1, -1], 
+              ["", "", "", "", "", "", "", "", "", ""],
+              ["", "", "", "", "", "", "", "", "", ""],
+              ["", "", "", "", "", "", "", "", "", ""]
+            ]);           
+            setGuessColors([
+              [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1], 
               [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-              [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]]);
-            setKeys0(["", "", "", "", "", "", "", "", "", ""])
-            setTurnCounter(0)
+              [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+              [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+            ]);
+            setKeys0DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+            setKeys1DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+            setKeys2DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1]);
+            setKeys3DordleColors([-1, -1, -1, -1, -1, -1, -1]);
+            setGreenKeys([]);
+            setYellowKeys([]);
+            setGreyKeys([]);
+            setKeys0(["", "", "", "", "", "", "", "", "", ""]);
+            setTurnCounter(0);
             setSymbolResponse("");
+            setWordReveal("");
             disableKeyPressRef.current = false;
-          }, 1000);
+          }, 2000);
         // Correct, so level complete, return home
         } else {
           setSymbolResponse("check");
@@ -201,7 +229,7 @@ function Keyboard7() {
             setGameChosen({ gameChosen: false, gameNumber: '' });
             setSymbolResponse("");
             disableKeyPressRef.current = false;
-          }, 1000); 
+          }, 2000); 
         }
       }
     }
@@ -344,10 +372,17 @@ function Keyboard7() {
         }
       } else if (turnCounter === 3) {
         const wordGuess = keys0.join('');
-        findGreen(wordGuess.toLowerCase());
-      }
-
-      
+        if (tenLetterWordSet.has(wordGuess.toLowerCase())) {
+          findGreen(wordGuess.toLowerCase());
+        } else {
+          disableKeyPressRef.current = true;
+          setSymbolResponse("times");
+          setTimeout(() => {
+            setKeys0(["", "", "", "", "", "", "", "", "", ""]);
+            setSymbolResponse("");
+            disableKeyPressRef.current = false;
+        }, 1000);
+      }}
     }
 
     useEffect(() => {
@@ -428,7 +463,7 @@ function Keyboard7() {
                 })}
             </div>
             <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>
-            <div className='line4'><DordleGuesses /></div>
+            {wordReveal ? (<h1>{wordReveal.toUpperCase()}</h1>) : (<div className='line5'><DordleGuesses /></div>)}
             </Keyboard7Context.Provider>
         </div>
     )

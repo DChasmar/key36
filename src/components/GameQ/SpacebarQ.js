@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../../App';
-import { FaCheck, FaTimes } from '../IconModule';
+import { FaCheck } from '../IconModule';
 
 function Spacebar({ keyVal }) {
   const { setGameChosen } = useContext(AppContext);
@@ -14,9 +14,6 @@ function Spacebar({ keyVal }) {
   if (keyVal === 'check') {
     iconComponent = <FaCheck />;
     iconColorClass = 'check-color';
-  } else if (keyVal === 'times') {
-    iconComponent = <FaTimes />;
-    iconColorClass = 'times-color';
   }
   
 

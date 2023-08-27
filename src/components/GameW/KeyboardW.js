@@ -3,7 +3,8 @@ import { AppContext } from '../../App';
 import Key from './KeyW';
 import Spacebar from './SpacebarW';
 import compoundWordBank from './CompoundWordList.txt';
-import fourLetterWordBank from './FourLetterWords.txt';
+import fourLetterWordBank from '../FourLetterWords.txt';
+import eightLetterWordBank from './EightLetterWords.txt';
 import DordleGuesses from './DordleGuessesW';
 
 export const KeyboardWContext = createContext();
@@ -16,7 +17,7 @@ function KeyboardW() {
     const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
     const allKeys = [keys1, keys2, keys3];
 
-    const [keys0DordleColors, setKeys0DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1, -1]);
+    const [keys0DordleColors, setKeys0DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     const [keys1DordleColors, setKeys1DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     const [keys2DordleColors, setKeys2DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1, -1, -1]);
     const [keys3DordleColors, setKeys3DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1]);
@@ -43,7 +44,9 @@ function KeyboardW() {
 
     const [compoundWordSet, setCompoundWordSet] = useState(new Set());
     const [fourLetterWordSet, setFourLetterWordSet] = useState(new Set());
+    const [eightLetterWordSet, setEightLetterWordSet] = useState(new Set());
     const [correctWord, setCorrectWord] = useState("");
+    const [wordReveal, setWordReveal] = useState("");
 
     const [symbolResponse, setSymbolResponse] = useState("");
 
@@ -65,15 +68,25 @@ function KeyboardW() {
       const fourLetterWordSet = new Set(wordArr);
       return { fourLetterWordSet };
     }
+
+    const generateEightLetterWordSet = async () => {
+      const response = await fetch(eightLetterWordBank);
+      const result = await response.text();
+      const wordArr = result.split("\n");
+      const eightLetterWordSet = new Set(wordArr);
+      return { eightLetterWordSet };
+    }
     
     useEffect(() => {
       const fetchData = async () => {
         const compoundWords = await generateCompoundWordSet();
         const fourLetterWords = await generateFourLetterWordSet();
+        const eightLetterWords = await generateEightLetterWordSet();
     
         setCompoundWordSet(compoundWords.compoundWordSet);
         setCorrectWord(compoundWords.randomCompoundWord);
         setFourLetterWordSet(fourLetterWords.fourLetterWordSet);
+        setEightLetterWordSet(eightLetterWords.eightLetterWordSet);
       };
     
       fetchData();
@@ -88,18 +101,18 @@ function KeyboardW() {
       const emptyIndex = updatedKeys.findIndex((val) => val === '');
       if (emptyIndex >= 0) {
           updatedKeys[emptyIndex] = key.toUpperCase();
-          if (turnCounter < 4) {
+          if (turnCounter < 3) {
             updatedKeys[emptyIndex + 4] = key.toUpperCase();        
       }}
       setKeys0(updatedKeys);
     };
 
-    const removeLetter = (key) => {
+    const removeLetter = () => {
       let updatedKeys = [...keys0];
       const emptyIndex = updatedKeys.findIndex((val) => val === '');
       if (emptyIndex > 0 && emptyIndex < 8) {
           updatedKeys[emptyIndex - 1] = '';
-          if (turnCounter < 4) {
+          if (turnCounter < 3) {
             updatedKeys[emptyIndex + 4] = '';
       }}
       setKeys0(updatedKeys);
@@ -147,9 +160,9 @@ function KeyboardW() {
     }, [greenKeys, yellowKeys, greyKeys]);
 
     const registerAndReset = (updatedGuessColors) => {
-      if (turnCounter < 4) {
+      if (turnCounter < 3) {
         // Reveal keys for word guess
-        setKeys0DordleColors(updatedGuessColors)
+        setKeys0DordleColors(updatedGuessColors);
         // Record guess colors in bottom table
         setGuessColors((prevGuessColors) => {
           const newGuessColors = [...prevGuessColors];
@@ -164,35 +177,50 @@ function KeyboardW() {
         });
         // Reset guess keys to blank and white
         setTimeout(() => {
-          setKeys0DordleColors([-1, -1, -1, -1, -1, -1, -1, -1])
-          setKeys0(["", "", "", "", "", "", "", ""])
+          setKeys0DordleColors([-1, -1, -1, -1, -1, -1, -1, -1]);
+          setKeys0(["", "", "", "", "", "", "", ""]);
           setTurnCounter((prevTurnCounter) => prevTurnCounter + 1);
           disableKeyPressRef.current = false;
         }, 1000);
       // Logic for final guess
-      } else if (turnCounter === 4) {
-        setKeys0DordleColors(updatedGuessColors)
+      } else if (turnCounter === 3) {
+        setKeys0DordleColors(updatedGuessColors);
         const hasNonGreenColors = updatedGuessColors.some(color => color !== 2);
         // Incorrect, so reset with new word
         if (hasNonGreenColors) {
           setSymbolResponse("times");
+          setWordReveal(correctWord);
           setTimeout(() => {
             const compoundWordArray = Array.from(compoundWordSet);
             const newCompoundWordSet = compoundWordArray.filter(word => word !== correctWord);
             const randomCompoundWord = newCompoundWordSet[Math.floor(Math.random() * newCompoundWordSet.length)];
-            setCorrectWord(randomCompoundWord)
+            setCorrectWord(randomCompoundWord);
             setKeys0DordleColors([-1, -1, -1, -1, -1, -1, -1, -1]);
-            setGuesses([["", "", "", "", "", "", "", ""],
+            setGuesses([
               ["", "", "", "", "", "", "", ""],
-              ["", "", "", "", "", "", "", ""]]);           
-            setGuessColors([[-1, -1, -1, -1, -1, -1, -1, -1], 
+              ["", "", "", "", "", "", "", ""],
+              ["", "", "", "", "", "", "", ""],
+              ["", "", "", "", "", "", "", ""]
+            ]);           
+            setGuessColors([
+              [-1, -1, -1, -1, -1, -1, -1, -1], 
               [-1, -1, -1, -1, -1, -1, -1, -1],
-              [-1, -1, -1, -1, -1, -1, -1, -1]]);
-            setKeys0(["", "", "", "", "", "", "", ""])
-            setTurnCounter(0)
+              [-1, -1, -1, -1, -1, -1, -1, -1],
+              [-1, -1, -1, -1, -1, -1, -1, -1]
+            ]);
+            setKeys0DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+            setKeys1DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+            setKeys2DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1]);
+            setKeys3DordleColors([-1, -1, -1, -1, -1, -1, -1]);
+            setGreenKeys([]);
+            setYellowKeys([]);
+            setGreyKeys([]);
+            setKeys0(["", "", "", "", "", "", "", ""]);
+            setTurnCounter(0);
             setSymbolResponse("");
+            setWordReveal("");
             disableKeyPressRef.current = false;
-          }, 1000);
+          }, 2000);
         // Correct, so level complete, return home
         } else {
           setSymbolResponse("check");
@@ -203,13 +231,13 @@ function KeyboardW() {
             setGameChosen({ gameChosen: false, gameNumber: '' });
             setSymbolResponse("");
             disableKeyPressRef.current = false;
-          }, 1000); 
+          }, 2000); 
         }
       }
     }
 
     const findGrey = (wordGuess1, wordGuess2, updatedGuessColors, uniqueGreenKeys, uniqueYellowKeys) => {
-      if (turnCounter < 4) {
+      if (turnCounter < 3) {
         let newGreyKeys = [...greyKeys]
         for (let i = 0; i < 4; i++) {
           if (wordGuess1[i] !== "_") {
@@ -226,7 +254,7 @@ function KeyboardW() {
         uniqueGreyKeys = uniqueGreyKeys.filter(key => !uniqueGreenKeys.includes(key) && !uniqueYellowKeys.includes(key));
         setGreyKeys(uniqueGreyKeys)
         registerAndReset(updatedGuessColors)
-      } else if (turnCounter === 4) {
+      } else if (turnCounter === 3) {
         let newGreyKeys = [...greyKeys]
         for (let i = 0; i < 8; i++) {
           if (wordGuess1[i] !== "_") {
@@ -243,7 +271,7 @@ function KeyboardW() {
     }
 
     const findYellow = (wordGuess1, compound1, updatedGuessColors, compound2,  wordGuess2, uniqueGreenKeys) => {
-      if (turnCounter < 4) {
+      if (turnCounter < 3) {
         let newCompound1 = compound1.join("")
         let newCompound2 = compound2.join("")
         let newYellowKeys = [...yellowKeys];
@@ -266,7 +294,7 @@ function KeyboardW() {
         uniqueYellowKeys = uniqueYellowKeys.filter(key => !uniqueGreenKeys.includes(key));
         setYellowKeys(uniqueYellowKeys)
         findGrey(wordGuess1, wordGuess2, updatedGuessColors, uniqueGreenKeys, uniqueYellowKeys)
-      } else if (turnCounter === 4) {
+      } else if (turnCounter === 3) {
         let newCorrectWord = compound1.join("");
         let newYellowKeys = [...yellowKeys];
         for (let i = 0; i < 8; i++) {
@@ -287,7 +315,7 @@ function KeyboardW() {
 
     const findGreen = (wordGuess) => {
       disableKeyPressRef.current = true;
-      if (turnCounter < 4) {
+      if (turnCounter < 3) {
         let compound1 = [...correctWord.slice(0,4)];
         let compound2 = [...correctWord.slice(4,8)];
         let wordGuess1 = [...wordGuess];
@@ -311,7 +339,7 @@ function KeyboardW() {
         let uniqueGreenKeys = [...new Set(newGreenKeys)];
         setGreenKeys(uniqueGreenKeys)
         findYellow(wordGuess1, compound1, updatedGuessColors, compound2,  wordGuess2, uniqueGreenKeys)
-      } else if (turnCounter === 4) {
+      } else if (turnCounter === 3) {
         let newCorrectWord = [...correctWord];
         let wordGuess1 = [...wordGuess]
         let updatedGuessColors = [...keys0DordleColors];
@@ -331,7 +359,7 @@ function KeyboardW() {
 
     const checkWord = () => {
       if (keys0.includes("")) return;
-      if (turnCounter < 4) {
+      if (turnCounter < 3) {
         const wordGuess = keys0.slice(0, 4).join('');
         if (fourLetterWordSet.has(wordGuess.toLowerCase())) {
           findGreen(wordGuess.toLowerCase());
@@ -339,17 +367,25 @@ function KeyboardW() {
           disableKeyPressRef.current = true;
           setSymbolResponse("times");
           setTimeout(() => {
-            setKeys0(["", "", "", "", "", "", "", "", "", ""]);
+            setKeys0(["", "", "", "", "", "", "", ""]);
             setSymbolResponse("");
             disableKeyPressRef.current = false;
         }, 1000);
         }
-      } else if (turnCounter === 4) {
+      } else if (turnCounter === 3) {
         const wordGuess = keys0.join('');
-        findGreen(wordGuess.toLowerCase());
+        if (eightLetterWordSet.has(wordGuess.toLowerCase())) {
+          findGreen(wordGuess.toLowerCase());
+        } else {
+          disableKeyPressRef.current = true;
+          setSymbolResponse("times");
+          setTimeout(() => {
+            setKeys0(["", "", "", "", "", "", "", ""]);
+            setSymbolResponse("");
+            disableKeyPressRef.current = false;
+        }, 1000);
+        }
       }
-
-      
     }
 
     useEffect(() => {
@@ -406,7 +442,7 @@ function KeyboardW() {
                 return (
                   <React.Fragment key={uniqueKey}>
                   <Key keyVal={key} dark color={keys0DordleColors[index]} />
-                  {index === 3 && turnCounter < 4 && <div className='divider'>|</div>}
+                  {index === 3 && turnCounter < 3 && <div className='divider'>|</div>}
                   </React.Fragment>
                 );
             })}</div>
@@ -430,7 +466,7 @@ function KeyboardW() {
                 })}
             </div>
             <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>
-            <div className='line4'><DordleGuesses /></div>
+            {wordReveal ? (<h1>{wordReveal.toUpperCase()}</h1>) : (<div className='line5'><DordleGuesses /></div>)}
             </KeyboardWContext.Provider>
         </div>
     )

@@ -19,7 +19,7 @@ function KeyboardQ() {
     const [keys3Blue, setKeys3Blue] = useState([0, 0, 0, 0, 0, -1, 0]);
     
     const [selectedKeys, setSelectedKeys] = useState([]);
-    const [response, setResponse] = useState("")
+    const [symbolResponse, setSymbolResponse] = useState("")
 
     // Define the keyboard layout as a dictionary
     const keyTouchDictionary = {
@@ -64,7 +64,7 @@ function KeyboardQ() {
     const checkGameOver = () => {
       const isOneExists = keys0Blue.includes(0) || keys1Blue.includes(0) || keys2Blue.includes(0) || keys3Blue.includes(0);
       if (!isOneExists) {
-        setResponse("check");
+        setSymbolResponse("check");
         setTimeout(() => {
           let newKeys1Color = keys1Color;
           newKeys1Color[0] = 1;
@@ -113,7 +113,9 @@ function KeyboardQ() {
       if (selectedKeys.length === 0) {
         setSelectedKeys([key]);
       } else {
-        if (goodPick(key)) {
+        if (selectedKeys.includes(key)) {
+          return;
+        } else if (goodPick(key)) {
           let newSelectedKeys = [...selectedKeys];
           newSelectedKeys.push(key);
           setSelectedKeys(newSelectedKeys);
@@ -143,6 +145,8 @@ function KeyboardQ() {
         } else {
             for (const keys of allKeys) {
                 for (const key of keys) {
+                  const disallowedKeys = ["r", "u", "n"]
+                  if (disallowedKeys.includes(event.key.toLowerCase())) return;
                   if (event.key.toLowerCase() === key.toLowerCase()) {
                     selectKey(key);
                     break;
@@ -200,7 +204,7 @@ function KeyboardQ() {
                 blue={keys3Blue[index] === 1} />;
                 })}
             </div>
-            <div className='line4'>< Spacebar keyVal={response} /></div>
+            <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>
             </KeyboardQContext.Provider>
         </div>
     )

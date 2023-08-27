@@ -11,7 +11,7 @@ function Keyboard8() {
     const [keys1, setKeys1] = useState(["", ""]);
     const [keys2, setKeys2] = useState(["x", ""]);
     const [keys3, setKeys3] = useState(["", ""]);
-    const [keys4, setKeys4] = useState(["+", "", "", ""]);
+    const [keys4, setKeys4] = useState(["+", "", "", " "]);
     const [keys5, setKeys5] = useState(["", ""]);
 
     const [symbolResponse, setSymbolResponse] = useState("");
@@ -45,7 +45,7 @@ function Keyboard8() {
         disableKeyPressRef.current = true;
         setSymbolResponse("times");
         setTimeout(() => {
-            setKeys4(["x","", "", ""]);
+            setKeys4(["x","", "", " "]);
             setKeys5(["", ""]);
             setSymbolResponse("");
             disableKeyPressRef.current = false;
@@ -202,30 +202,30 @@ function Keyboard8() {
             <div className='line1'>
                 {keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} dark />;
+                return <Key keyVal={key} key={uniqueKey} clickableKey={false} guessKey />;
             })}</div>
             <div className='line2'>
                 {keys2.map((key, index) => {
                 const uniqueKey = `2-${index}`;
                 const isSymbol = index === 0;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} dark />;})}
+                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} guessKey={index===1} />;})}
             </div>
             <hr width='200px' size='3' color='#444444' />
             <div className='line3'>{keys3.map((key, index) => {
                 const uniqueKey = `3-${index}`;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} dark />;
+                return <Key keyVal={key} key={uniqueKey} clickableKey={false} guessKey />;
                 })}
             </div>
             <div className='line4'>
                 {keys4.map((key, index) => {
                 const uniqueKey = `4-${index}`;
                 const isSymbol = index === 0 || index === 3;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} dark />;})}
+                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} guessKey={index===1 || index===2} />;})}
             </div>
             <hr width='200px' size='3' color='#444444' />
             <div className='line5'>{keys5.map((key, index) => {
                 const uniqueKey = `5-${index}`;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} dark />;
+                return <Key keyVal={key} key={uniqueKey} clickableKey={false} guessKey />;
                 })}
             </div>
             <div className='line6'>< Spacebar keyVal={symbolResponse} /></div>

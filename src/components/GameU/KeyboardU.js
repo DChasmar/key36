@@ -2,30 +2,30 @@ import React, { useCallback, useContext, useEffect, useState, createContext, use
 import { AppContext } from '../../App';
 import Key from './KeyU';
 import Spacebar from './SpacebarU';
+import HundredsGrid from './HundredsGridU'
 
 export const KeyboardUContext = createContext();
 
 function KeyboardU() {
     const { setGameChosen, keys1Color, setKeys1Color } = useContext(AppContext);
-    const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9"]);
-    const [keys1, setKeys1] = useState(["", "", "x", "", "=", "", ""]);
-    const [keys2, setKeys2] = useState(["", "x", "", "=", "", ""]);
+    const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
+    const [guess, setGuess] = useState("");
 
-    const numbersArray = [
-        "X", "2", "3", "22", "5", "23", "7", "222", "33", "25",
-        "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-        "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
-        "31", "32", "33", "34", "35", "36", "37", "38", "39", "40",
-        "41", "42", "43", "44", "45", "46", "47", "48", "49", "50",
-        "51", "52", "53", "54", "55", "56", "57", "58", "59", "60",
-        "61", "62", "63", "64", "65", "66", "67", "68", "69", "70",
-        "71", "72", "73", "74", "75", "76", "77", "78", "79", "80",
-        "81", "82", "83", "84", "85", "86", "87", "88", "89", "90",
-        "91", "92", "93", "94", "95", "96", "97", "98", "99", "100"
-    ];
+    const [numberArray, setNumberArray] = useState([
+        "  ", "2", "3", "22", "5", "23", "7", "222", "33", "25",
+        "11", "", "13", "", "", "", "17", "", "19", "",
+        "", "", "23", "", "", "", "", "", "29", "",
+        "31", "", "", "", "", "", "37", "", "", "",
+        "41", "", "43", "", "", "", "47", "", "", "",
+        "", "", "53", "", "", "", "", "", "59", "",
+        "61", "", "", "", "", "", "67", "", "", "",
+        "71", "", "73", "", "", "", "", "", "79", "",
+        "", "", "83", "", "", "", "", "", "89", "",
+        "", "", "", "", "", "", "97", "", "", ""
+      ]);
 
     const primeArray = [
-        "X", "2", "3", "22", "5", "23", "7", "222", "33", "25",
+        "  ", "2", "3", "22", "5", "23", "7", "222", "33", "25",
         "11",'223', '13', '27', '35', '2222', '17', '233', '19', '225', 
         '37', '211', '23', '2223', '55', '213', '333', '227', '29', '235', 
         '31', '22222', '311', '217', '57', '2233', '37', '219', '313', '2225', 
@@ -35,152 +35,77 @@ function KeyboardU() {
         '71', '22233', '73', '237', '355', '2219', '711', '2313', '79', '22225', 
         '3333', '241', '83', '2237', '517', '243', '329', '22211', '89', '2335', 
         '713', '2223', '331', '247', '519', '222223', '97', '277', '3311', '2255'
-    ]
+    ];
 
     const [symbolResponse, setSymbolResponse] = useState("");
+    const [xResponse, setXResponse] = useState("");
 
     const disableKeyPressRef = useRef(false);
 
     const gameOver = () => {
+        disableKeyPressRef.current = true;
         setSymbolResponse("check");
         setTimeout(() => {
-          let newKeys1Color = keys1Color;
-          newKeys1Color[6] = 1;
-          setKeys1Color(newKeys1Color)
-          setGameChosen({ gameChosen: false, gameNumber: '' });
+            setSymbolResponse("");
+            let newKeys1Color = keys1Color;
+            newKeys1Color[6] = 1;
+            setKeys1Color(newKeys1Color)
+            setGameChosen({ gameChosen: false, gameNumber: '' });
+            disableKeyPressRef.current = false;
         }, 1000);
     }
 
-    const resetBadProduct = () => {
+    const badGuess = () => {
+        setXResponse("times");
         disableKeyPressRef.current = true;
-        setSymbolResponse("times");
         setTimeout(() => {
-            setKeys0(["1", "2", "3", "4", "5", "6", "7", "8", "9"]);
-            setKeys1(["", "", "x", "", "=", "", ""]);
-            setKeys2(["", "x", "", "=", "", ""]);
-            setSymbolResponse("");
+            setGuess("");
+            setXResponse("");
             disableKeyPressRef.current = false;
         }, 500);
     }
 
-    const findProduct = () => {
-        let newKeys0 = [...keys0];
-        let newKeys1 = [...keys1];
-        let newKeys2 = [...keys2];
-        if (keys1[0] !== "" && keys1[1] !== "" && keys1[3] !== "" && keys1.includes("")) {
-            const keys1Int1 = parseInt(keys1.slice(0,2).join(""));
-            const keys1Int2 = parseInt(keys1[3]);
-            const product = keys1Int1*keys1Int2;
-            console.log(product);
-            if (product < 100) {
-                const digitsArray = product.toString().split('');
-                const bothDigitsExistInKeys0 = digitsArray.every((digit) => keys0.includes(digit));
-                if (bothDigitsExistInKeys0) {
-                    newKeys1[5] = digitsArray[0];
-                    newKeys1[6] = digitsArray[1];
-                    setKeys1(newKeys1);
-                    digitsArray.forEach((val) => {
-                        let returnIndex = keys0.indexOf(val);
-                        newKeys0[returnIndex] = "";
-                    })
-                    setKeys0(newKeys0);
-                } else {
-                    let newDigitsArray = [...digitsArray];
-                    digitsArray.forEach((val) => {
-                        if (!keys0.includes(val)) {
-                            let returnIndex = digitsArray.indexOf(val);
-                            newDigitsArray[returnIndex] = "";
-                        };
-                    })
-                    newKeys1[5] = digitsArray[0];
-                    newKeys1[6] = digitsArray[1];
-                    setKeys1(newKeys1);
-                    resetBadProduct();
+    const checkGuess = () => {
+        let newNumberArray = [...numberArray];
+        if (numberArray.includes("")) {
+            const guessIndex = numberArray.indexOf("");
+            if (guess === primeArray[guessIndex]) {
+                newNumberArray[guessIndex] = guess;
+                setNumberArray(newNumberArray)
+                setGuess("");
+                if (newNumberArray[numberArray.length - 1] === "2255") {
+                    gameOver()
                 }
-            } else {
-                resetBadProduct();
+            } else if (guess.length === primeArray[guessIndex].length) {
+                badGuess();
             }
-        } else if (!keys1.includes("") && keys2[0] !== "" && keys2[2] !== "" && keys2.includes("")) {
-            const keys2Int1 = parseInt(keys2[0]);
-            const keys2Int2 = parseInt(keys2[2]);
-            const product = keys2Int1*keys2Int2;
-            if (product > 9 && product < 100) {
-                const digitsArray = product.toString().split('');
-                const bothDigitsExistInKeys0 = digitsArray.every((digit) => keys0.includes(digit));
-                if (bothDigitsExistInKeys0) {
-                    newKeys2[4] = digitsArray[0];
-                    newKeys2[5] = digitsArray[1];
-                    setKeys2(newKeys2);
-                    digitsArray.forEach((val) => {
-                        let returnIndex = keys0.indexOf(val);
-                        newKeys0[returnIndex] = "";
-                    })
-                    setKeys0(newKeys0);
-                    gameOver();
-                } else {
-                    let newDigitsArray = [...digitsArray];
-                    digitsArray.forEach((val) => {
-                        if (!keys0.includes(val)) {
-                            let returnIndex = digitsArray.indexOf(val);
-                            newDigitsArray[returnIndex] = "";
-                        };
-                    })
-                    newKeys2[4] = digitsArray[0];
-                    newKeys2[5] = digitsArray[1];
-                    setKeys2(newKeys2);
-                    resetBadProduct();
-                }
-            } else {
-                resetBadProduct();
-            }
-        } else {
-
         }
-    };
-
-    useEffect(() => {
-        findProduct()
-    }, [keys1, keys2]);
+    }
 
     const addNumber = (key) => {
-        let newKeys0 = [...keys0]
-        let newKeys1 = [...keys1]
-        let newKeys2 = [...keys2]
-        let newPlayableArray = [keys1[0], keys1[1], keys1[3], keys2[0], keys2[2]];
-        console.log(newPlayableArray);
-        if (keys0.includes(key)) {
-            const emptyIndex = newPlayableArray.findIndex((val) => val === "");
-            const keyIndex = newKeys0.findIndex((val) => val === key);
-            if (emptyIndex < 2) {
-                if (newKeys1[0] === "") {
-                    newKeys1[0] = key;
-                } else if (newKeys1[1] === "") {
-                    newKeys1[1] = key;
-                }
-                setKeys1(newKeys1)
-            } else if (emptyIndex === 2) {
-                newKeys1[3] = key;
-                setKeys1(newKeys1)
-            } else if (emptyIndex > 2) {
-                if (newKeys2[0] === "") {
-                    newKeys2[0] = key;
-                } else if (newKeys2[2] === "") {
-                    newKeys2[2] = key;
-                }
-                setKeys2(newKeys2)
-            } else {
-                return
-            }
-            newKeys0[keyIndex] = "";
-            setKeys0(newKeys0)
-        }
-        
+        let newGuess = guess.concat(key);
+        setGuess(newGuess);
     }
+
+    const removeNumber = () => {
+        if (guess.length > 0) {
+            let newGuess = guess.slice(0, -1);
+            setGuess(newGuess);
+        }
+    }
+
+    useEffect(() => {
+        if (guess !== "") {
+            checkGuess();
+        }
+    }, [guess]);
 
     const handleKeyboard = useCallback((event) => {
         if (disableKeyPressRef.current) {
             event.preventDefault();
             return;
+        } else if (event.key === "Backspace") {
+            removeNumber()
         } else if (event.key === " ") {
             setGameChosen({gameChosen: false, gameNumber: ''});
         } else {
@@ -203,24 +128,17 @@ function KeyboardU() {
         <div className="keyboard" onKeyDown={handleKeyboard}>
             <KeyboardUContext.Provider
                 value={{
-                addNumber}}>
+                addNumber,
+                numberArray,
+                primeArray, 
+                guess, 
+                xResponse}}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
                 return <Key keyVal={key} key={uniqueKey} clickableKey={true} />;
             })}</div>
-            <div className='line1'>
-                {keys1.map((key, index) => {
-                const uniqueKey = `1-${index}`;
-                const isSymbol = index === 2 || index === 4;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} dark />;
-            })}</div>
-            <div className='line2'>
-                {keys2.map((key, index) => {
-                const uniqueKey = `2-${index}`;
-                const isSymbol = index === 1 || index === 3;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} dark />;})}
-            </div>
-            <div className='line3'>< Spacebar keyVal={symbolResponse} /></div>
+            <div className='line1'><HundredsGrid /></div>
+            <div className='line2'>< Spacebar keyVal={symbolResponse} /></div>
             </KeyboardUContext.Provider>
         </div>
     )

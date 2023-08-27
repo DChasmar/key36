@@ -164,7 +164,7 @@ function Keyboard0() {
                 badWord()
             }
         }
-    }
+    };
 
     useEffect(() => {
         checkWord()
@@ -213,20 +213,20 @@ function Keyboard0() {
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={0} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={0} guessKey />;
             })}</div>
             <div className='line1'>{keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={1} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={1} blankKey={key===""} />;
             })}</div>
             <div className='line2'>
                 {keys2.map((key, index) => {
                 const uniqueKey = `2-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={2} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={2} blankKey={key===""} />;
             })}</div>
             <div className='line3'>{keys3.map((key, index) => {
                 const uniqueKey = `3-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={3} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={3} blankKey={key===""} />;
             })}</div>
             <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>
             <div className='word_box'>

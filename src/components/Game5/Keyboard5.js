@@ -154,11 +154,11 @@ function Keyboard5() {
       });
       keys3.forEach((key, index) => {
         const numberCode = key.charCodeAt(0);
+        const upKey = keys2[index + 1];
+          const upLetterCode = upKey.charCodeAt(0);
         if (index === 0) {
           const nextKey = keys3[index + 1];
           const nextLetterCode = nextKey.charCodeAt(0);
-          const upKey = keys2[index + 1];
-          const upLetterCode = upKey.charCodeAt(0);
 
           if (Math.abs(numberCode - nextLetterCode) === 1 || Math.abs(numberCode - upLetterCode) === 1) {
             updatedKeys3Red[index] = 1;
@@ -166,8 +166,6 @@ function Keyboard5() {
         } else if (index === keys3.length - 1) {
           const prevKey = keys3[index - 1];
           const prevLetterCode = prevKey.charCodeAt(0);
-          const upKey = keys2[index + 1];
-          const upLetterCode = upKey.charCodeAt(0);
           
           if (Math.abs(numberCode - prevLetterCode) === 1 || Math.abs(numberCode - upLetterCode) === 1) {
             updatedKeys3Red[index] = 1;
@@ -177,8 +175,6 @@ function Keyboard5() {
           const nextKey = keys3[index + 1];
           const prevLetterCode = prevKey.charCodeAt(0);
           const nextLetterCode = nextKey.charCodeAt(0);
-          const upKey = keys2[index + 1];
-          const upLetterCode = upKey.charCodeAt(0);
           
           if (Math.abs(numberCode - prevLetterCode) === 1 || Math.abs(numberCode - nextLetterCode) === 1
            || Math.abs(numberCode - upLetterCode) === 1) {

@@ -11,15 +11,22 @@ function Keyboard2() {
     const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
     const [keys1, setKeys1] = useState(["", "", "", "", "", "", "", "", "", ""]);
     const [keys2, setKeys2] = useState(["", "", "", "", "", "", "", "", ""]);
-    const keys3 = ["", "", "", "", "", "", "",];
     const [totalFactors, setTotalFactors] = useState(0)
     const [factorsList, setFactorsList] = useState([])
     const [factorsFive, setFactorsFive] = useState([])
-    const darkKeys = [0, 1, 4, 5, 8, 9]
     const shouldIncludeEllipsisBefore = !factorsList.includes(10);
     const shouldIncludeEllipsisAfter = !factorsList.includes(49);
 
     const fauxKeys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
+
+    const [symbolResponse, setSymbolResponse] = useState("")
+
+    const arrowStyles = {
+        color: "#7dd7ff",
+        fontSize: '30px',
+        position: 'relative',
+        top: '8px',
+    };
 
     const addNumber = (key) => {
         let updatedKeys0 = [...keys0];
@@ -48,7 +55,6 @@ function Keyboard2() {
                 }
                 const resultingInteger = parseInt(joinedStrings, 10);
                 const newFactorArray = findFactors(resultingInteger);
-                console.log(newFactorArray)
                 const newFactorTotal = newFactorArray.length;
                 updatedFactorTotal += newFactorTotal;
                 if (emptyIndex1 === 2) {
@@ -127,40 +133,47 @@ function Keyboard2() {
         factors.sort((a, b) => a - b); // Sort factors in ascending order
         return factors;
     }
+
+    const gameOver = () => {
+        setSymbolResponse("check");
+        setTimeout(() => {
+            // localStorage.setItem('factorsList', JSON.stringify(newFactorsList));
+            setSymbolResponse("");
+            let newKeys0Color = keys0Color;
+            newKeys0Color[1] = 1;
+            setKeys0Color(newKeys0Color)
+            setGameChosen({gameChosen: false, gameNumber: ''})
+        }, 1000); 
+    }
+
     const registerAndReset = () => {
         if (keys1.includes("")) return;
         let newFactorTotal = totalFactors;
-        let newFactorsList = factorsList;
+        let newFactorsList = [...factorsList];
+        if (!factorsList.includes(newFactorTotal)) {
+            newFactorsList.push(newFactorTotal)
+            newFactorsList.sort((a, b) => a - b); // Sort factors in ascending order
+            setFactorsList(newFactorsList)
+        }
         setTimeout(() => {
             setFactorsFive([])
             setTotalFactors(0)
             setKeys0(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"])
             setKeys1(["", "", "", "", "", "", "", "", "", ""]);
             setKeys2(["", "", "", "", "", "", "", "", ""]);
-            if (factorsList.includes(newFactorTotal)) return;
-            newFactorsList.push(newFactorTotal)
-            newFactorsList.sort((a, b) => a - b); // Sort factors in ascending order
-            setFactorsList(newFactorsList)
-            // const hasAllNumbers = Array.from({ length: 40 }, (_, index) => index + 10).every(number => factorsList.includes(number));
-            // if (hasAllNumbers === true) {
-            //     let newKeys0Color = keys0Color;
-            //     newKeys0Color[0] = 1;
-            //     setKeys0Color(newKeys0Color)
-            //     setGameChosen({gameChosen: false, gameNumber: ''})}
             if (newFactorsList.includes(10) && newFactorsList.includes(49)) {
-                localStorage.setItem('factorsList', JSON.stringify(newFactorsList));
-                let newKeys0Color = keys0Color;
-                newKeys0Color[1] = 1;
-                setKeys0Color(newKeys0Color)
-                setGameChosen({gameChosen: false, gameNumber: ''}) 
+                gameOver();
             }
-        }, 400);        
+        }, 1000);        
     }
 
     const getNumberColorStyle = (number) => {
-        const colorValue = Math.floor((number - 10) * 255 / 51);
+        const colorValue = Math.floor((number - 10) * 5);
         const colorHex = colorValue.toString(16).padStart(2, '0');
-        const color = `#${colorHex.repeat(3)}`;
+        let color = `#${colorHex.repeat(3)}`;
+        if (number === 10 || number === 49) {
+            color = "#7dd7ff"
+        }
         return { color };
     };
 
@@ -194,18 +207,28 @@ function Keyboard2() {
         };
     }, [handleKeyboard]);
 
-    useEffect(() => {
-        // Retrieve factorsList from localStorage if it exists
-        const storedFactorsList = localStorage.getItem('factorsList');
-        if (storedFactorsList) {
-            try {
-              setFactorsList(JSON.parse(storedFactorsList));
-            } catch (error) {
-              console.error('Error parsing factorsList:', error);
-              // Handle the error, such as setting a default value for factorsList
-            }
+    // useEffect(() => {
+    //     // Retrieve factorsList from localStorage if it exists
+    //     const storedFactorsList = localStorage.getItem('factorsList');
+    //     if (storedFactorsList) {
+    //         try {
+    //           setFactorsList(JSON.parse(storedFactorsList));
+    //         } catch (error) {
+    //           console.error('Error parsing factorsList:', error);
+    //           // Handle the error, such as setting a default value for factorsList
+    //         }
+    //     }
+    // }, []);
+
+    const chunkArray = (arr, chunkSize) => {
+        const chunks = [];
+        for (let i = 0; i < arr.length; i += chunkSize) {
+          chunks.push(arr.slice(i, i + chunkSize));
         }
-    }, []);
+        return chunks;
+    };
+    
+    const rows = chunkArray(keys1.slice(0,10), 2);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>
@@ -216,49 +239,37 @@ function Keyboard2() {
                 factorsList}}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={true} add={true} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine = {0} clickableKey={true} add={true} />;
             })}</div>
-            <div className='line1'>
-                {keys1.map((key, index) => {
-                const uniqueKey = `1-${index}`;
-                return <Key keyVal={key} key={uniqueKey} dark={darkKeys.includes(index)} clickableKey={true} add={false} />;
-            })}</div>
-                <div className='line2'>
-                    {keys2.map((key, index) => {
-                    const uniqueKey = `2-${index}`;
-                    return <Key keyVal={key} key={uniqueKey} clickableKey={false} />;})}
-                </div>
-            <div className='line3'>{keys3.map((key, index) => {
-                const uniqueKey = `3-${index}`;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} />;
-                })}
+            <div className='hundreds_box'>
+                {rows.map((row, rowIndex) => (
+                    <div className={`factors_line${rowIndex + 1}`} key={`factors_line${rowIndex + 1}`}>
+                    {row.map((key, colIndex) => {
+                        const uniqueKey = `1-${rowIndex}-${colIndex}`;
+                        return <Key keyVal={key} key={uniqueKey} black keyLine = {1} clickableKey={true} add={false} />;
+                    })}
+                    </div>
+                ))}
             </div>
-            <div className='line4'>< Spacebar keyVal= {"Factors: " + totalFactors} /></div>
-            <div>{factorsFive.length > 0 ? (
+            <div className='line3'>< Spacebar keyVal= {symbolResponse || "Factors: " + totalFactors} /></div>
+                {/* factorsFive.map((array, index) => (
+                <h3 key={index} style={{ marginTop: '2px', marginBottom: '2px' }} >{array.join(', ')}</h3> */}
+            <div> {factorsFive.length > 0 ? (
                 factorsFive.map((array, index) => (
                 <h3 key={index} style={{ marginTop: '2px', marginBottom: '2px' }} >{array.join(', ')}</h3>
                     ))
                 ) : (
-                    <h3>
-                    {shouldIncludeEllipsisBefore && factorsList.length > 0 && <span style={{
-                        color: '#000000',
-                        fontSize: '30px',
-                        position: 'relative',
-                        top: '8px'
-                    }}>{<BiSolidLeftArrowAlt />} </span>}
+                <h3>
+                    {shouldIncludeEllipsisBefore && factorsList.length > 0 && <span style={arrowStyles}>{<BiSolidLeftArrowAlt />} </span>}
                     {factorsList.map((number, index) => (
                     <span key={index} style={getNumberColorStyle(number)}> 
                         {number + ' '}
                     </span>
                     ))}
-                    {shouldIncludeEllipsisAfter && factorsList.length > 0 && <span style={{ 
-                        color: '#aaaaaa',
-                        fontSize: '30px',
-                        position: 'relative',
-                        top: '8px'
-                    }}>{<BiSolidRightArrowAlt />}</span>}
-                    </h3>
-            )}</div>
+                    {shouldIncludeEllipsisAfter && factorsList.length > 0 && <span style={arrowStyles}>{<BiSolidRightArrowAlt />}</span>}
+                </h3>
+                )}
+            </div>
             </Keyboard2Context.Provider>
         </div>
     )

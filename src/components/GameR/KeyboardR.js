@@ -160,11 +160,11 @@ function KeyboardR() {
       });
       keys3.forEach((key, index) => {
         const numberCode = letters.indexOf(key);
+        const upKey = keys2[index + 1];
+        const upLetterCode = letters.indexOf(upKey);
         if (index === 0) {
           const nextKey = keys3[index + 1];
           const nextLetterCode = letters.indexOf(nextKey);
-          const upKey = keys2[index + 1];
-          const upLetterCode = letters.indexOf(upKey);
 
           if (numberCode + nextLetterCode === 25 || numberCode + upLetterCode === 25) {
             updatedKeys3Red[index] = 1;
@@ -172,8 +172,6 @@ function KeyboardR() {
         } else if (index === keys3.length - 1) {
           const prevKey = keys3[index - 1];
           const prevLetterCode = letters.indexOf(prevKey);
-          const upKey = keys2[index + 1];
-          const upLetterCode = letters.indexOf(upKey);
           
           if (numberCode + prevLetterCode === 25 || numberCode + upLetterCode === 25) {
             updatedKeys3Red[index] = 1;
@@ -183,8 +181,6 @@ function KeyboardR() {
           const nextKey = keys3[index + 1];
           const prevLetterCode = letters.indexOf(prevKey);
           const nextLetterCode = letters.indexOf(nextKey);
-          const upKey = keys2[index + 1];
-          const upLetterCode = letters.indexOf(upKey);
           
           if (numberCode + prevLetterCode === 25 || numberCode + nextLetterCode === 25
            || numberCode + upLetterCode === 25) {

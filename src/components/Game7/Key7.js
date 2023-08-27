@@ -20,7 +20,7 @@ function Key({ keyVal, dark, color }) {
   }
 
   return (
-      <div className={dark ? 'key dark_key' : 'key'} style={{ backgroundColor: boxColor }} onClick={chooseKey}>
+      <div className={dark ? 'key dark_key reveal-tile' : 'key'} style={{ backgroundColor: boxColor }} onClick={chooseKey}>
         {keyVal}
       </div>
     )

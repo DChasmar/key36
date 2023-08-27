@@ -1,5 +1,6 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Keyboard1Context } from './Keyboard1';
+import { GoDotFill } from '../IconModule';
 
 function Key({ keyVal, keyLine }) {
   const { addLetter, removeLetter } = useContext(Keyboard1Context);
@@ -11,9 +12,18 @@ function Key({ keyVal, keyLine }) {
     };
   };
 
+  let iconComponent = null;
+
+  if (keyVal === "") {
+    iconComponent = <GoDotFill />;
+  } else {
+    iconComponent = keyVal;
+  }
+
+
   return (
-      <div className='key' onClick={selectLetter}>
-        {keyVal}
+      <div className= {keyLine === 0 ? 'key guess_key' : 'key'} onClick={selectLetter}>
+        {iconComponent}
       </div>
     )
 }

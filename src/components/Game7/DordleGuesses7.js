@@ -14,7 +14,7 @@ function DordleGuesses() {
         return (
           <React.Fragment key={uniqueKey}>
             <DordleBox keyVal={key} color={guessColors[0][index]} />
-            {index === 4 && turnCounter < 3 && <div className='divider mini_divider'>|</div>}
+            {index === 4 && <div className='divider mini_divider'>|</div>}
           </React.Fragment>
         );
       })}</div>
@@ -24,7 +24,7 @@ function DordleGuesses() {
         return (
           <React.Fragment key={uniqueKey}>
             <DordleBox keyVal={key} color={guessColors[1][index]} />
-            {index === 4 && turnCounter < 3 && <div className='divider mini_divider'>|</div>}
+            {index === 4 && <div className='divider mini_divider'>|</div>}
           </React.Fragment>
         );
       })}</div>
@@ -34,7 +34,7 @@ function DordleGuesses() {
         return (
           <React.Fragment key={uniqueKey}>
             <DordleBox keyVal={key} color={guessColors[2][index]} />
-            {index === 4 && turnCounter < 3 && <div className='divider mini_divider'>|</div>}
+            {index === 4 && <div className='divider mini_divider'>|</div>}
           </React.Fragment>
         );
       })}</div>

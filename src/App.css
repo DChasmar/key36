@@ -13,7 +13,7 @@
 }
 
 .keyboard {
-  width: 750px;
+  width: 950px;
   height: 750px;
   margin-top: 50px;
   justify-content: center;
@@ -50,8 +50,18 @@
 }
 
 .dark_key {
-  border: 3px solid #444444;
-  color: #444444;
+  border: 3px solid #444;
+  color: #444;
+}
+
+.black_key {
+  border: 3px solid #000;
+  color: #000;
+}
+
+.blank_key {
+  border: 3px solid #fff;
+  cursor: default;
 }
 
 .mathsymbol_key {
@@ -62,10 +72,16 @@
 }
 
 .run_key {
-  border: 0px;
+  border: 3px solid #fff;
   color: black;
   font-size: 25px;
   cursor: default;
+}
+
+.guess_key {
+  border: 3px solid #fff;
+  color: black;
+  font-size: 40px;
 }
 
 .redcharacter_key {
@@ -89,6 +105,10 @@
   border: 3px solid #444444;
 }
 
+.default_cursor {
+  cursor: default;
+}
+
 .check-color {
   color: green;
 }
@@ -102,14 +122,21 @@
   height: 30px;
   margin: 2px;
   border-radius: 3px;
-  border: 1.5px solid #444444;
+  border: 1.5px solid #444;
   font-size: 20px;
-  color: #444444;
+  color: #444;
 }
 
 .mini_line1,
 .mini_line2,
-.mini_line3 {
+.mini_line3,
+.mini_line4,
+.mini_line5,
+.mini_line6, 
+.mini_line7,
+.mini_line8,
+.mini_line9, 
+.mini_line10 {
   flex: 33%;
   flex-direction: row;
   display: flex;
@@ -174,6 +201,118 @@
   margin: 0;
 }
 
+.hundreds_box {
+  flex: 33%;
+  margin-top: 2px;
+  justify-content: center;
+}
+
+.star-box {
+  flex: 33%;
+  margin-top: 2px;
+  justify-content: center;
+  color:#f7da21;
+}
+
+.star-box svg {
+  font-size: 2em; /* Adjust the font-size to make the stars larger */
+  margin-right: 5px; /* Add some margin between the stars */
+}
+
+.hundreds_line1,
+.hundreds_line2,
+.hundreds_line3,
+.hundreds_line4,
+.hundreds_line5,
+.hundreds_line6,
+.hundreds_line7,
+.hundreds_line8,
+.hundreds_line9,
+.hundreds_line10 {
+  flex: 33%;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+}
+
+.hundreds_key {
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+  border-radius: 3px;
+  border: none;
+  font-size: 100%;
+  color: #222;
+  cursor: default;
+}
+
+.factors_line1,
+.factors_line2,
+.factors_line3,
+.factors_line4,
+.factors_line5 {
+  flex: 33%;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+}
+
+.factors_key {
+  width: 30px;
+  height: 50px;
+  margin: 3px;
+  border-radius: 5px;
+  border: none;
+  font-size: 100%;
+  color: black;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 40px;
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.triangle_key {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  margin: 1px;
+  border: 3px solid #444;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  background-color: white;
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: default;
+}
+
+.centered-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #000;
+}
+
+.bottom-text {
+  font-size: 16px;
+  color: #666;
+}
+
+@keyframes reveal {
+  0% {
+      transform: scaleY(0);
+  }
+  100% {
+      transform: scaleY(1);
+  }
+}
+
+.reveal-tile {
+  animation: reveal 0.4s ease forwards;
+}
+
 @keyframes flip {
   0% {
       transform: scaleY(1);
@@ -184,4 +323,30 @@
   100% {
       transform: scaleY(1);
   }
+}
+
+.hexagon-fill {
+  cursor: pointer;
+  fill: #f7da21;
+  transition: all 100ms;
+}
+
+.hexagon-blank {
+  cursor: default;
+  fill: #fff;
+  transition: all 100ms;
+}
+
+.hexagon-letter {
+  font-weight: 700;
+  font-size: 1.875em;
+  color: grey;
+  text-anchor: middle;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.hexagon-letter.hexagon-letter-grey {
+  color: grey;
+  font-weight: 300;
 }

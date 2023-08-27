@@ -45,7 +45,6 @@ function KeyboardE() {
             const keys1Int1 = parseInt(keys1.slice(0,2).join(""));
             const keys1Int2 = parseInt(keys1[3]);
             const product = keys1Int1*keys1Int2;
-            console.log(product);
             if (product < 100) {
                 const digitsArray = product.toString().split('');
                 const bothDigitsExistInKeys0 = digitsArray.every((digit) => keys0.includes(digit));
@@ -80,7 +79,7 @@ function KeyboardE() {
             const product = keys2Int1*keys2Int2;
             if (product > 9 && product < 100) {
                 const digitsArray = product.toString().split('');
-                const bothDigitsExistInKeys0 = digitsArray.every((digit) => keys0.includes(digit));
+                const bothDigitsExistInKeys0 = digitsArray.every((digit) => keys0.includes(digit)) && new Set(digitsArray).size === digitsArray.length;
                 if (bothDigitsExistInKeys0) {
                     newKeys2[4] = digitsArray[0];
                     newKeys2[5] = digitsArray[1];
@@ -121,16 +120,11 @@ function KeyboardE() {
         let newKeys1 = [...keys1]
         let newKeys2 = [...keys2]
         let newPlayableArray = [keys1[0], keys1[1], keys1[3], keys2[0], keys2[2]];
-        console.log(newPlayableArray);
         if (keys0.includes(key)) {
             const emptyIndex = newPlayableArray.findIndex((val) => val === "");
             const keyIndex = newKeys0.findIndex((val) => val === key);
             if (emptyIndex < 2) {
-                if (newKeys1[0] === "") {
-                    newKeys1[0] = key;
-                } else if (newKeys1[1] === "") {
-                    newKeys1[1] = key;
-                }
+                newKeys1[emptyIndex] = key;
                 setKeys1(newKeys1)
             } else if (emptyIndex === 2) {
                 newKeys1[3] = key;
@@ -180,19 +174,19 @@ function KeyboardE() {
                 addNumber}}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={true} />;
+                return <Key keyVal={key} key={uniqueKey} clickableKey={true} keyLine={0} />;
             })}</div>
             <div className='line1'>
                 {keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
                 const isSymbol = index === 2 || index === 4;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} dark />;
+                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} keyLine={1} guessKey={!isSymbol} />;
             })}</div>
             <div className='line2'>
                 {keys2.map((key, index) => {
                 const uniqueKey = `2-${index}`;
                 const isSymbol = index === 1 || index === 3;
-                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} dark />;})}
+                return <Key keyVal={key} key={uniqueKey} clickableKey={false} symbol={isSymbol ? true : undefined} keyLine={2} guessKey={!isSymbol}  />;})}
             </div>
             <div className='line3'>< Spacebar keyVal={symbolResponse} /></div>
             </KeyboardEContext.Provider>

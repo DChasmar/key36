@@ -18,13 +18,13 @@ function Keyboard4() {
     const fauxKeys3 = ["Z", "X", "C", "V", "B", "N", "M"]
 
     const [wordGuess, setWordGuess] = useState("")
-    const [letterSet, setLetterSet] = useState("EVENSPRIMESSQUARESODDSPERFECT".split(""))
-    const [correctWords, setCorrectWords] = useState(['EVENS', 'PRIMES', 'SQUARES', 'ODDS', 'PERFECT'])
+    const [letterSet, setLetterSet] = useState("EVENSODDSPRIMESSQUARESPERFECT".split(""))
+    const [correctWords, setCorrectWords] = useState(['EVENS', 'ODDS', 'PRIMES', 'SQUARES', 'PERFECT'])
     const [puzzleArrays, setPuzzleArrays] = useState([
         ["", "2", "", "4", "", "6", "", "8", "", "0"], 
+        ["1", "", "3", "", "5", "", "7", "", "9"], 
         ["", "2", "3", "", "5", "", "7", "", "", ""], 
         ["1", "", "", "4", "", "", "", "", "9", ""], 
-        ["1", "", "3", "", "5", "", "7", "", "9"], 
         ["", "", "", "", "6", "", "", ""]])
 
     const [symbolResponse, setSymbolResponse] = useState("")
@@ -181,20 +181,20 @@ function Keyboard4() {
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={0} dark={!/\d/.test(key) && key !== "*"} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={0} guessKey={!/\d/.test(key)} />;
             })}</div>
             <div className='line1'>{keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={1} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={1} blankKey={key === ""} />;
             })}</div>
             <div className='line2'>
                 {keys2.map((key, index) => {
                 const uniqueKey = `2-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={2} />;})}
+                return <Key keyVal={key} key={uniqueKey} keyLine={2} blankKey={key === ""} />;})}
             </div>
             <div className='line3'>{keys3.map((key, index) => {
                 const uniqueKey = `3-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={3} />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={3} blankKey={key === ""} />;
                 })}
             </div>
             <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>
