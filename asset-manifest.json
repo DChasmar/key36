@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/key36/static/css/main.6d293663.css",
+    "main.js": "/key36/static/js/main.c15c060e.js",
+    "static/js/787.df70322c.chunk.js": "/key36/static/js/787.df70322c.chunk.js",
+    "static/media/NoRepeats.txt": "/key36/static/media/NoRepeats.bc1112d2fe32771cd144.txt",
+    "static/media/NineLetterWords.txt": "/key36/static/media/NineLetterWords.8f325b9b9a94720e4e63.txt",
+    "static/media/EightLetterWords.txt": "/key36/static/media/EightLetterWords.4625af5e5820b4840ab7.txt",
+    "static/media/TenLetterWords.txt": "/key36/static/media/TenLetterWords.24449933148edb70a015.txt",
+    "static/media/sWords.txt": "/key36/static/media/sWords.cb162772db119389362c.txt",
+    "static/media/CuriousWords.txt": "/key36/static/media/CuriousWords.be079f8145c8aa2ec9a7.txt",
+    "static/media/SixLetterWords.txt": "/key36/static/media/SixLetterWords.335aba1f3ed2e6afff25.txt",
+    "static/media/ScrabbleWords12.txt": "/key36/static/media/ScrabbleWords12.2f0a57d886dc39c30121.txt",
+    "static/media/ScrabbleWords10.txt": "/key36/static/media/ScrabbleWords10.ad0a513fb816684cbd5d.txt",
+    "static/media/FiveLetterWords.txt": "/key36/static/media/FiveLetterWords.5ad5b7b750d88626a416.txt",
+    "static/media/CHwords.txt": "/key36/static/media/CHwords.0ca83c8e12de91c10c5e.txt",
+    "static/media/EightLetterPangrams.txt": "/key36/static/media/EightLetterPangrams.a8c6a2753be2c477100f.txt",
+    "static/media/EightLetterSets.txt": "/key36/static/media/EightLetterSets.714bfa691ac3245aa5b9.txt",
+    "static/media/FourLetterWords.txt": "/key36/static/media/FourLetterWords.9bfd15369c13725cfa6a.txt",
+    "static/media/SevenLetterPangrams.txt": "/key36/static/media/SevenLetterPangrams.f2ef7cbd487e4ff043ae.txt",
+    "static/media/oneSyllableSWords.txt": "/key36/static/media/oneSyllableSWords.207881127d3b3a808f13.txt",
+    "static/media/iWords.txt": "/key36/static/media/iWords.d4064f4d76be568f06cf.txt",
+    "static/media/SevenLetterSets.txt": "/key36/static/media/SevenLetterSets.18b9b8b978237db359c6.txt",
+    "static/media/aWords.txt": "/key36/static/media/aWords.4034a92bcbc8ec33ca51.txt",
+    "static/media/oWords.txt": "/key36/static/media/oWords.00b7dec6d018fc23cdd0.txt",
+    "static/media/ddWords.txt": "/key36/static/media/ddWords.e19a301c291ebffb478e.txt",
+    "static/media/CompoundWordList.txt": "/key36/static/media/CompoundWordList.e9cc070a5a82bad14500.txt",
+    "static/media/ThreeLetterWords.txt": "/key36/static/media/ThreeLetterWords.e0ac0ab270d2bbdf943b.txt",
+    "static/media/qwertyuiop_words.txt": "/key36/static/media/qwertyuiop_words.55e86857ef83df310710.txt",
+    "index.html": "/key36/index.html",
+    "main.6d293663.css.map": "/key36/static/css/main.6d293663.css.map",
+    "main.c15c060e.js.map": "/key36/static/js/main.c15c060e.js.map",
+    "787.df70322c.chunk.js.map": "/key36/static/js/787.df70322c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d293663.css",
+    "static/js/main.c15c060e.js"
+  ]
+}
