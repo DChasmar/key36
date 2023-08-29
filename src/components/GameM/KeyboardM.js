@@ -16,6 +16,8 @@ function KeyboardM() {
     const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
     const allKeys = [keys1, keys2, keys3]
 
+    const [total, setTotal] = useState(0);
+
     const [totals, setTotals] = useState([
         "51", "52", "53", "54", "55", "56", "57", "58", "59", "60",
         "61", "62", "63", "64", "65", "66", "67", "68", "69", "70"
@@ -100,6 +102,7 @@ function KeyboardM() {
             const letterValue = letter.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
             newWordTotal += letterValue;
         }
+        setTotal(newWordTotal);
         // Now newWordTotal contains the total value of the uppercase letters in keys0.join('')
         if (newWordTotal > 70 || keys0.length > 12) {
             badWord();
@@ -174,7 +177,8 @@ function KeyboardM() {
             <KeyboardMContext.Provider
                 value={{
                 addLetter,
-                removeLetter
+                removeLetter,
+                total
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;

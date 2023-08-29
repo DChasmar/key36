@@ -16,6 +16,8 @@ function KeyboardZ() {
     const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
     const allKeys = [keys1, keys2, keys3]
 
+    const [total, setTotal] = useState(0);
+
     const [totals, setTotals] = useState([
         "31", "32", "33", "34", "35", "36", "37", "38", "39", "40",
         "41", "42", "43", "44", "45", "46", "47", "48", "49", "50"
@@ -100,6 +102,7 @@ function KeyboardZ() {
             const letterValue = letter.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
             newWordTotal += letterValue;
         }
+        setTotal(newWordTotal);
         // Now newWordTotal contains the total value of the uppercase letters in keys0.join('')
         if (newWordTotal > 50 || keys0.length > 12) {
             badWord();
@@ -174,7 +177,8 @@ function KeyboardZ() {
             <KeyboardZContext.Provider
                 value={{
                 addLetter,
-                removeLetter
+                removeLetter,
+                total
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;

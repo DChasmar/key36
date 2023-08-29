@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../../App';
+import { KeyboardZContext } from './KeyboardZ';
 import { FaCheck, FaTimes } from '../IconModule';
 
 function Spacebar({ keyVal }) {
     const { setGameChosen } = useContext(AppContext);
+    const { total } = useContext(KeyboardZContext);
     const selectLetter = () => {
       setGameChosen({gameChosen: false, gameNumber: ''});
       };
@@ -18,12 +20,8 @@ function Spacebar({ keyVal }) {
         iconComponent = <FaTimes />;
         iconColorClass = 'times-color';
     } else {
-        iconComponent = keyVal;
-        if (keyVal > 0) {
-            iconColorClass = 'check-color';
-        } else if (keyVal < 0) {
-            iconColorClass = 'times-color';
-        }
+        iconComponent = total || 0;
+        iconColorClass = 'black';
     }
   
 
