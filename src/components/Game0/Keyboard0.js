@@ -2,12 +2,12 @@ import React, { useCallback, useContext, useEffect, useState, createContext, use
 import { AppContext } from '../../App';
 import Key from './Key0';
 import Spacebar from './Spacebar0';
-import words from './NoRepeats.txt'
+import words from './NoRepeats.json'
 
 export const Keyboard0Context = createContext();
 
 function Keyboard0() {
-    const { setGameChosen, keys0Color, setKeys0Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState([""]);
     const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -28,12 +28,9 @@ function Keyboard0() {
     const disableKeyPressRef = useRef(false);
 
     const generateWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const wordSet = new Set(wordArr);
+        const wordSet = new Set(words.words);
         return { wordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {
@@ -45,9 +42,9 @@ function Keyboard0() {
     }, []);
 
     const gameOver = () => {
-        let newKeys0Color = keys0Color;
-        newKeys0Color[9] = 1;
-        setKeys0Color(newKeys0Color);
+        let newKeysColor = [...keysColor];
+        newKeysColor[0][9] = 1;
+        setKeysColor(newKeysColor);
         setGameChosen({ gameChosen: false, gameNumber: '' });
     }
 

@@ -7,7 +7,7 @@ import HundredsGrid from './HundredsGridU'
 export const KeyboardUContext = createContext();
 
 function KeyboardU() {
-    const { setGameChosen, keys1Color, setKeys1Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
     const [guess, setGuess] = useState("");
 
@@ -47,9 +47,9 @@ function KeyboardU() {
         setSymbolResponse("check");
         setTimeout(() => {
             setSymbolResponse("");
-            let newKeys1Color = keys1Color;
-            newKeys1Color[6] = 1;
-            setKeys1Color(newKeys1Color)
+            let newKeysColor = [...keysColor];
+            newKeysColor[1][6] = 1;
+            setKeysColor(newKeysColor);
             setGameChosen({ gameChosen: false, gameNumber: '' });
             disableKeyPressRef.current = false;
         }, 1000);

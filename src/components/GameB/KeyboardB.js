@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyB';
 import Spacebar from './SpacebarB';
 import pangrams from './EightLetterPangrams.txt';
@@ -9,7 +10,7 @@ import StarBox from './StarBoxB';
 export const KeyboardBContext = createContext();
 
 function KeyboardB() {
-    const { setGameChosen, keys3Color, setKeys3Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["", "", "", "", "", "", "", ""]);
     const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -88,9 +89,9 @@ function KeyboardB() {
     }, []);
 
     const gameOver = () => {
-        let newKeys3Color = [...keys3Color];
-        newKeys3Color[4] = 1;
-        setKeys3Color(newKeys3Color);
+        let newKeysColor = [...keysColor];
+        newKeysColor[3][4] = 1;
+        setKeysColor(newKeysColor);
         setGameChosen({ gameChosen: false, gameNumber: '' });
     };
 
@@ -142,23 +143,27 @@ function KeyboardB() {
         }
     };
 
-    const addLetter = (key) => {
-        let updatedKeys = [...keys0];
-        const emptyIndex = updatedKeys.findIndex((val) => val === '');
-        if (emptyIndex >= 0) {
-            updatedKeys[emptyIndex] = key.toUpperCase();        
-        }
-        setKeys0(updatedKeys);
-    };
+    // const addLetter = (key) => {
+    //     let updatedKeys = [...keys0];
+    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
+    //     if (emptyIndex >= 0) {
+    //         updatedKeys[emptyIndex] = key.toUpperCase();        
+    //     }
+    //     setKeys0(updatedKeys);
+    // };
 
-    const removeLetter = () => {
-        let updatedKeys = [...keys0];
-        const emptyIndex = updatedKeys.findIndex((val) => val === '');
-        if (emptyIndex > 0 && emptyIndex < 8) {
-            updatedKeys[emptyIndex - 1] = '';
-        }
-        setKeys0(updatedKeys);
-    };
+    // const removeLetter = () => {
+    //     let updatedKeys = [...keys0];
+    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
+    //     if (emptyIndex > 0 && emptyIndex < 8) {
+    //         updatedKeys[emptyIndex - 1] = '';
+    //     }
+    //     setKeys0(updatedKeys);
+    // };
+
+    const addLetter = addLetterToArray(keys0, setKeys0);
+
+    const removeLetter = removeLetterFromArray(keys0, setKeys0);
 
     useEffect(() => {
         checkWord()

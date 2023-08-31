@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyA';
 import Spacebar from './SpacebarA';
 import words from './aWords.txt'
@@ -7,7 +8,7 @@ import words from './aWords.txt'
 export const KeyboardAContext = createContext();
 
 function KeyboardA() {
-    const { setGameChosen, keys2Color, setKeys2Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState([""]);
     const [keys1, setKeys1] = useState(["Q", "W", "", "R", "T", "", "", "", "", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -42,9 +43,9 @@ function KeyboardA() {
     }, []);
 
     const gameOver = () => {
-        let newKeys2Color = keys2Color;
-        newKeys2Color[0] = 1;
-        setKeys2Color(newKeys2Color);
+        let newKeysColor = [...keysColor];
+        newKeysColor[2][0] = 1;
+        setKeysColor(newKeysColor);
         setGameChosen({ gameChosen: false, gameNumber: '' });
     };
 
@@ -97,23 +98,9 @@ function KeyboardA() {
         }
     };
 
-    const addLetter = (key) => {
-        let updatedKeys = [...keys0];
-        const emptyIndex = updatedKeys.findIndex((val) => val === '');
-        if (emptyIndex >= 0) {
-            updatedKeys[emptyIndex] = key.toUpperCase();        
-        }
-        setKeys0(updatedKeys);
-    };
+    const addLetter = addLetterToArray(keys0, setKeys0);
 
-    const removeLetter = () => {
-        let updatedKeys = [...keys0];
-        const emptyIndex = updatedKeys.findIndex((val) => val === '');
-        if (emptyIndex > 0 && emptyIndex < 10) {
-            updatedKeys[emptyIndex - 1] = '';
-        }
-        setKeys0(updatedKeys);
-    };
+    const removeLetter = removeLetterFromArray(keys0, setKeys0);
 
     useEffect(() => {
         if (keys0.findIndex((val) => val === '') === keys0.length - 1 && wordList.includes(keys0.slice(0, keys0.length - 1).join('')) && keys0.length > 3) {

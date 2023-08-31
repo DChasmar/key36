@@ -7,7 +7,7 @@ import { BiSolidLeftArrowAlt, BiSolidRightArrowAlt } from 'react-icons/bi';
 export const Keyboard2Context = createContext();
 
 function Keyboard2() {
-    const { setGameChosen, keys0Color, setKeys0Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
     const [keys1, setKeys1] = useState(["", "", "", "", "", "", "", "", "", ""]);
     const [keys2, setKeys2] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -139,10 +139,10 @@ function Keyboard2() {
         setTimeout(() => {
             // localStorage.setItem('factorsList', JSON.stringify(newFactorsList));
             setSymbolResponse("");
-            let newKeys0Color = keys0Color;
-            newKeys0Color[1] = 1;
-            setKeys0Color(newKeys0Color)
-            setGameChosen({gameChosen: false, gameNumber: ''})
+            let newKeysColor = [...keysColor];
+            newKeysColor[0][1] = 1;
+            setKeysColor(newKeysColor);
+            setGameChosen({ gameChosen: false, gameNumber: '' });
         }, 1000); 
     }
 

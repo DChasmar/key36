@@ -7,7 +7,7 @@ import HundredsGrid from './HundredsGridJ'
 export const KeyboardJContext = createContext();
 
 function KeyboardJ() {
-    const { setGameChosen, keys2Color, setKeys2Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3", "4"]);
     const [guess, setGuess] = useState("");
 
@@ -41,7 +41,7 @@ function KeyboardJ() {
         { word: 'Deficient', color: '#96cf8d' },
         { word: 'Prime', color: '#d9d91e' },
         { word: 'Abundant', color: '#23a7fa' },
-        { word: 'Perfect', color: '#e7427a' },
+        { word: 'Perfect', color: '#e7427a' }
     ];
     
     const [symbolResponse, setSymbolResponse] = useState("");
@@ -53,9 +53,9 @@ function KeyboardJ() {
         setSymbolResponse("check");
         setTimeout(() => {
             setSymbolResponse("");
-            let newKeys2Color = keys2Color;
-            newKeys2Color[6] = 1;
-            setKeys2Color(newKeys2Color)
+            let newKeysColor = [...keysColor];
+            newKeysColor[2][6] = 1;
+            setKeysColor(newKeysColor);
             setGameChosen({ gameChosen: false, gameNumber: '' });
             disableKeyPressRef.current = false;
         }, 4000);

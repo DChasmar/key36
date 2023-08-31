@@ -10,7 +10,7 @@ import DordleGuesses from './DordleGuesses7';
 export const Keyboard7Context = createContext();
 
 function Keyboard7() {
-    const { setGameChosen, keys0Color, setKeys0Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["", "", "", "", "", "", "", "", "", ""]);
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
@@ -89,10 +89,6 @@ function Keyboard7() {
     
       fetchData();
     }, []);
-
-    // useEffect(() => {
-    //   console.log(correctWord);
-    // }, [correctWord]);
 
     const addLetter = (key) => {
       let updatedKeys = [...keys0];
@@ -223,9 +219,9 @@ function Keyboard7() {
         } else {
           setSymbolResponse("check");
           setTimeout(() => {
-            let newKeys0Color = keys0Color;
-            newKeys0Color[6] = 1;
-            setKeys0Color(newKeys0Color);
+            let newKeysColor = [...keysColor];
+            newKeysColor[0][6] = 1;
+            setKeysColor(newKeysColor);
             setGameChosen({ gameChosen: false, gameNumber: '' });
             setSymbolResponse("");
             disableKeyPressRef.current = false;

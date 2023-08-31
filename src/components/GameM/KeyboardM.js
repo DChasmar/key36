@@ -7,7 +7,7 @@ import words from './CuriousWords.txt'
 export const KeyboardMContext = createContext();
 
 function KeyboardM() {
-    const { setGameChosen, keys3Color, setKeys3Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState([""]);
     const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -54,9 +54,9 @@ function KeyboardM() {
     }, []);
 
     const gameOver = () => {
-        let newKeys3Color = keys3Color;
-        newKeys3Color[6] = 1;
-        setKeys3Color(newKeys3Color);
+        let newKeysColor = [...keysColor];
+        newKeysColor[3][6] = 1;
+        setKeysColor(newKeysColor);
         setGameChosen({ gameChosen: false, gameNumber: '' });
     };
 

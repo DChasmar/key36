@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './Key1';
 import Spacebar from './Spacebar1';
 import words from './qwertyuiop_words.txt'
@@ -7,7 +8,7 @@ import words from './qwertyuiop_words.txt'
 export const Keyboard1Context = createContext();
 
 function Keyboard1() {
-    const { setGameChosen, keys0Color, setKeys0Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState([""]);
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
 
@@ -38,9 +39,9 @@ function Keyboard1() {
     }, []);
 
     const gameOver = () => {
-        let newKeys0Color = keys0Color;
-        newKeys0Color[0] = 1;
-        setKeys0Color(newKeys0Color);
+        let newKeysColor = [...keysColor];
+        newKeysColor[0][0] = 1;
+        setKeysColor(newKeysColor);
         setGameChosen({ gameChosen: false, gameNumber: '' });
     }
 
@@ -92,23 +93,9 @@ function Keyboard1() {
         }
     };
 
-    const addLetter = (key) => {
-        let updatedKeys = [...keys0];
-        const emptyIndex = updatedKeys.findIndex((val) => val === '');
-        if (emptyIndex >= 0) {
-            updatedKeys[emptyIndex] = key.toUpperCase();        
-        }
-        setKeys0(updatedKeys);
-    }
+    const addLetter = addLetterToArray(keys0, setKeys0);
 
-    const removeLetter = () => {
-        let updatedKeys = [...keys0];
-        const emptyIndex = updatedKeys.findIndex((val) => val === '');
-        if (emptyIndex > 0 && emptyIndex < 10) {
-            updatedKeys[emptyIndex - 1] = '';
-        }
-        setKeys0(updatedKeys);
-    };
+    const removeLetter = removeLetterFromArray(keys0, setKeys0);
 
     useEffect(() => {
         checkWord()

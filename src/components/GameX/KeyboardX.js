@@ -6,7 +6,7 @@ import Spacebar from './SpacebarX';
 export const KeyboardXContext = createContext();
 
 function KeyboardX() {
-    const { setGameChosen, keys3Color, setKeys3Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
     const [keys1, setKeys1] = useState(["", "", "", "+", "", "", "", "=", "", "", "", ""]);
 
@@ -19,10 +19,10 @@ function KeyboardX() {
     const gameOver = () => {
         setSymbolResponse("check");
         setTimeout(() => {
-          let newKeys3Color = keys3Color;
-          newKeys3Color[1] = 1;
-          setKeys3Color(newKeys3Color)
-          setGameChosen({ gameChosen: false, gameNumber: '' });
+            let newKeysColor = [...keysColor];
+            newKeysColor[3][1] = 1;
+            setKeysColor(newKeysColor);
+            setGameChosen({ gameChosen: false, gameNumber: '' });
         }, 1000);
     }
 

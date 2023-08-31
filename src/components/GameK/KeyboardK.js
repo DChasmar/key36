@@ -6,7 +6,7 @@ import Spacebar from './SpacebarK';
 export const KeyboardKContext = createContext();
 
 function KeyboardK() {
-    const { setGameChosen, keys2Color, setKeys2Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["one", "one", "snake", "snake", " ", "a", "pawn", "pawn", "pawn", " ", "a", " ", "clock", "clock", "clock", "clock"]);
     const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -99,9 +99,9 @@ function KeyboardK() {
     const disableKeyPressRef = useRef(false);
 
     const gameOver = () => {
-        let newKeys2Color = keys2Color;
-        newKeys2Color[7] = 1;
-        setKeys2Color(newKeys2Color);
+        let newKeysColor = [...keysColor];
+        newKeysColor[2][7] = 1;
+        setKeysColor(newKeysColor);
         setGameChosen({ gameChosen: false, gameNumber: '' });
     }
 

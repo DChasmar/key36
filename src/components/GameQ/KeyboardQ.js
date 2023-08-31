@@ -6,7 +6,7 @@ import Spacebar from './SpacebarQ';
 export const KeyboardQContext = createContext();
 
 function KeyboardQ() {
-    const { setGameChosen, keys1Color, setKeys1Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
     const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -66,9 +66,9 @@ function KeyboardQ() {
       if (!isOneExists) {
         setSymbolResponse("check");
         setTimeout(() => {
-          let newKeys1Color = keys1Color;
-          newKeys1Color[0] = 1;
-          setKeys1Color(newKeys1Color)
+          let newKeysColor = [...keysColor];
+          newKeysColor[1][0] = 1;
+          setKeysColor(newKeysColor);
           setGameChosen({ gameChosen: false, gameNumber: '' });
         }, 1000);
       }

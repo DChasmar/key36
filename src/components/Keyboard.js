@@ -5,7 +5,7 @@ import Key from './Key';
 export const KeyboardContext = createContext();
 
 function Keyboard() {
-    const { chooseGame, keys0Color, keys1Color, keys2Color, keys3Color  } = useContext(AppContext);
+    const { chooseGame, keysColor } = useContext(AppContext);
     const keys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
@@ -35,19 +35,19 @@ function Keyboard() {
         <div className="keyboard" onKeyDown={handleKeyboard}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keys0Color[index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[0][index] === 1} />;
             })}</div>
             <div className='line1'>{keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keys1Color[index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[1][index] === 1} />;
             })}</div>
             <div className='line2'>{keys2.map((key, index) => {
                 const uniqueKey = `2-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keys2Color[index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[2][index] === 1} />;
             })}</div>
             <div className='line3'>{keys3.map((key, index) => {
                 const uniqueKey = `3-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keys3Color[index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[3][index] === 1} />;
                 })}
             </div>
         </div>

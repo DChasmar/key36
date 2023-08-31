@@ -6,7 +6,7 @@ import Spacebar from './Spacebar9';
 export const Keyboard9Context = createContext();
 
 function Keyboard9() {
-    const { setGameChosen, keys0Color, setKeys0Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState([""]);
     const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -38,9 +38,9 @@ function Keyboard9() {
     const disableKeyPressRef = useRef(false);
 
     const gameOver = () => {
-        let newKeys0Color = keys0Color;
-        newKeys0Color[8] = 1;
-        setKeys0Color(newKeys0Color);
+        let newKeysColor = [...keysColor];
+        newKeysColor[0][8] = 1;
+        setKeysColor(newKeysColor);
         setGameChosen({ gameChosen: false, gameNumber: '' });
     }
 

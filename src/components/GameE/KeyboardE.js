@@ -6,7 +6,7 @@ import Spacebar from './SpacebarE';
 export const KeyboardEContext = createContext();
 
 function KeyboardE() {
-    const { setGameChosen, keys1Color, setKeys1Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9"]);
     const [keys1, setKeys1] = useState(["", "", "x", "", "=", "", ""]);
     const [keys2, setKeys2] = useState(["", "x", "", "=", "", ""]);
@@ -18,10 +18,10 @@ function KeyboardE() {
     const gameOver = () => {
         setSymbolResponse("check");
         setTimeout(() => {
-          let newKeys1Color = keys1Color;
-          newKeys1Color[2] = 1;
-          setKeys1Color(newKeys1Color)
-          setGameChosen({ gameChosen: false, gameNumber: '' });
+            let newKeysColor = [...keysColor];
+            newKeysColor[1][2] = 1;
+            setKeysColor(newKeysColor);
+            setGameChosen({ gameChosen: false, gameNumber: '' });
         }, 1000);
     }
 

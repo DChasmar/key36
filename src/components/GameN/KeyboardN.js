@@ -11,7 +11,7 @@ import DordleGuesses from './DordleGuessesN';
 export const KeyboardNContext = createContext();
 
 function KeyboardN() {
-    const { setGameChosen, keys3Color, setKeys3Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["", "", "", "", ""]);
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
@@ -294,9 +294,9 @@ function KeyboardN() {
                 } else {
                 setSymbolResponse("check");
                 setTimeout(() => {
-                    let newKeys3Color = keys3Color;
-                    newKeys3Color[5] = 1;
-                    setKeys3Color(newKeys3Color);
+                    let newKeysColor = [...keysColor];
+                    newKeysColor[3][5] = 1;
+                    setKeysColor(newKeysColor);
                     setGameChosen({ gameChosen: false, gameNumber: '' });
                     setSymbolResponse("");
                     disableKeyPressRef.current = false;

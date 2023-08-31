@@ -41,89 +41,81 @@ import { createContext, useEffect, useState } from 'react';
 export const AppContext = createContext();
 
 function App() {
-  const [gameChosen, setGameChosen] = useState({
-    gameChosen: false,
-    gameNumber: '',
-  })
+    const [gameChosen, setGameChosen] = useState({
+        gameChosen: false,
+        gameNumber: '',
+    })
 
-  const [keys0Color, setKeys0Color] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  const [keys1Color, setKeys1Color] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  const [keys2Color, setKeys2Color] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  const [keys3Color, setKeys3Color] = useState([0, 0, 0, 0, 0, 0, 0]);
+    const [keysColor, setKeysColor] = useState([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0]
+    ]);
   
-  const chooseGame = (keyVal) => {
-    if (gameChosen.gameChosen === true) return;
-    const newSelectedLetter = keyVal;
-    setGameChosen({gameChosen: true, gameNumber: newSelectedLetter});
-  };
-
-  useEffect(() => {
-    console.log(gameChosen)
-  }, [gameChosen])
+    const chooseGame = (keyVal) => {
+        if (gameChosen.gameChosen === true) return;
+        const newSelectedLetter = keyVal;
+        setGameChosen({gameChosen: true, gameNumber: newSelectedLetter});
+    };
   
-  return (
-    <div className="App">
-      <AppContext.Provider
-        value={{
-          chooseGame,
-          gameChosen,
-          setGameChosen,
-          keys0Color,
-          setKeys0Color,
-          keys1Color,
-          setKeys1Color,
-          keys2Color,
-          setKeys2Color,
-          keys3Color,
-          setKeys3Color}}>
-        <div className='game'>
-          {
-            {
-              '1': <Keyboard1 />,
-              '2': <Keyboard2 />,
-              '3': <Keyboard3 />,
-              '4': <Keyboard4 />,
-              '5': <Keyboard5 />,
-              '6': <Keyboard6 />,
-              '7': <Keyboard7 />,
-              '8': <Keyboard8 />,
-              '9': <Keyboard9 />,
-              '0': <Keyboard0 />,
-              'Q': <KeyboardQ />,
-              'W': <KeyboardW />,
-              'E': <KeyboardE />,
-              'R': <KeyboardR />,
-              'T': <KeyboardT />,
-              'Y': <KeyboardY />,
-              'U': <KeyboardU />,
-              'I': <KeyboardI />,
-              'O': <KeyboardO />,
-              'P': <KeyboardP />,
-              'A': <KeyboardA />,
-              'S': <KeyboardS />,
-              'D': <KeyboardD />,
-              'F': <KeyboardF />,
-              'G': <KeyboardG />,
-              'H': <KeyboardH />,
-              'J': <KeyboardJ />,
-              'K': <KeyboardK />,
-              'L': <KeyboardL />,
-              'Z': <KeyboardZ />,
-              'X': <KeyboardX />,
-              'C': <KeyboardC />,
-              'V': <KeyboardV />,
-              'B': <KeyboardB />,
-              'N': <KeyboardN />,
-              'M': <KeyboardM />,
-              '': <Keyboard />,
-            }[gameChosen.gameNumber]
-          }
-        </div>
+    return (
+      <div className="App">
+        <AppContext.Provider
+          value={{
+            chooseGame,
+            gameChosen,
+            setGameChosen,
+            keysColor,
+            setKeysColor,}}>
+          <div className='game'>
+              {
+                  {
+                      '1': <Keyboard1 />,
+                      '2': <Keyboard2 />,
+                      '3': <Keyboard3 />,
+                      '4': <Keyboard4 />,
+                      '5': <Keyboard5 />,
+                      '6': <Keyboard6 />,
+                      '7': <Keyboard7 />,
+                      '8': <Keyboard8 />,
+                      '9': <Keyboard9 />,
+                      '0': <Keyboard0 />,
+                      'Q': <KeyboardQ />,
+                      'W': <KeyboardW />,
+                      'E': <KeyboardE />,
+                      'R': <KeyboardR />,
+                      'T': <KeyboardT />,
+                      'Y': <KeyboardY />,
+                      'U': <KeyboardU />,
+                      'I': <KeyboardI />,
+                      'O': <KeyboardO />,
+                      'P': <KeyboardP />,
+                      'A': <KeyboardA />,
+                      'S': <KeyboardS />,
+                      'D': <KeyboardD />,
+                      'F': <KeyboardF />,
+                      'G': <KeyboardG />,
+                      'H': <KeyboardH />,
+                      'J': <KeyboardJ />,
+                      'K': <KeyboardK />,
+                      'L': <KeyboardL />,
+                      'Z': <KeyboardZ />,
+                      'X': <KeyboardX />,
+                      'C': <KeyboardC />,
+                      'V': <KeyboardV />,
+                      'B': <KeyboardB />,
+                      'N': <KeyboardN />,
+                      'M': <KeyboardM />,
+                      '': <Keyboard />,
+                  }[gameChosen.gameNumber]
+              }
+          </div>
 
-      </AppContext.Provider>
-    </div>
+        </AppContext.Provider>
+      </div>
 
-  );
+    );
 }
 
 export default App;

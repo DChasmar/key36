@@ -6,7 +6,7 @@ import Spacebar from './Spacebar5';
 export const Keyboard5Context = createContext();
 
 function Keyboard5() {
-    const { setGameChosen, keys0Color, setKeys0Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
     const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
     const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
@@ -22,17 +22,17 @@ function Keyboard5() {
     const [response, setResponse] = useState("")
 
     const checkGameOver = () => {
-      const isOneExists = keys0Red.includes(0) || keys1Red.includes(0) || keys2Red.includes(0) || keys3Red.includes(0);
-      if (!isOneExists) {
-        setResponse("check");
-        setTimeout(() => {
-          let newKeys0Color = keys0Color;
-          newKeys0Color[4] = 1;
-          setKeys0Color(newKeys0Color)
-          setGameChosen({ gameChosen: false, gameNumber: '' });
-        }, 1000);
-      }
-      }
+        const isOneExists = keys0Red.includes(0) || keys1Red.includes(0) || keys2Red.includes(0) || keys3Red.includes(0);
+        if (!isOneExists) {
+            setResponse("check");
+            setTimeout(() => {
+                let newKeysColor = [...keysColor];
+                newKeysColor[0][4] = 1;
+                setKeysColor(newKeysColor);
+                setGameChosen({ gameChosen: false, gameNumber: '' });
+          }, 1000);
+        }
+    }
 
     const seeRedNumbers = () => {
       let updatedKeys0Red = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

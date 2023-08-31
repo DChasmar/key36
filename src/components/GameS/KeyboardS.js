@@ -7,7 +7,7 @@ import HundredsGrid from './HundredsGridS'
 export const KeyboardSContext = createContext();
 
 function KeyboardS() {
-    const { setGameChosen, keys2Color, setKeys2Color } = useContext(AppContext);
+    const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["1", "2", "3"]);
     const [guess, setGuess] = useState("");
 
@@ -22,7 +22,7 @@ function KeyboardS() {
         "", "", "", "", "", "", "", "", "", "", 
         "", "", "", "", "", "", "", "", "", "", 
         "", "", "", "", "", "", "", "", "", ""
-      ]);
+    ]);
 
     const primeSquareArray = [
         "1", "2", "2", "1", "2", "3", "2", "3", "1", "3",
@@ -36,6 +36,12 @@ function KeyboardS() {
         "1", "3", "2", "3", "3", "3", "3", "3", "2", "3",
         "3", "3", "3", "3", "3", "3", "2", "3", "3", "1"
     ];
+
+    const wordColors = [
+        { word: 'Square', color: '#96cf8d' },
+        { word: 'Prime', color: '#d9d91e' },
+        { word: 'Composite', color: '#23a7fa' }
+    ];
     
     const [symbolResponse, setSymbolResponse] = useState("");
 
@@ -46,12 +52,12 @@ function KeyboardS() {
         setSymbolResponse("check");
         setTimeout(() => {
             setSymbolResponse("");
-            let newKeys2Color = keys2Color;
-            newKeys2Color[1] = 1;
-            setKeys2Color(newKeys2Color)
+            let newKeysColor = [...keysColor];
+            newKeysColor[2][1] = 1;
+            setKeysColor(newKeysColor);
             setGameChosen({ gameChosen: false, gameNumber: '' });
             disableKeyPressRef.current = false;
-        }, 1000);
+        }, 4000);
     }
 
     const badGuess = () => {
@@ -143,6 +149,17 @@ function KeyboardS() {
             })}</div>
             <div className='line1'><HundredsGrid /></div>
             <div className='line2'>< Spacebar keyVal={symbolResponse} /></div>
+            <div className='line3'>
+            {symbolResponse === "check" && (
+                <h2>
+                    {wordColors.map(({ word, color }, index) => (
+                        <span key={index} style={{ color }}>
+                        {word}{' '}
+                        </span>
+                    ))}
+                </h2>
+            )}
+            </div>
             </KeyboardSContext.Provider>
         </div>
     )
