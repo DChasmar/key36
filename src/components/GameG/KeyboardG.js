@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyG';
 import Spacebar from './SpacebarG';
-import words from './ScrabbleWords10.txt'
+import words from './ScrabbleWords10.json'
 
 export const KeyboardGContext = createContext();
 
@@ -44,12 +44,9 @@ function KeyboardG() {
     const disableKeyPressRef = useRef(false);
 
     const generateWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const wordSet = new Set(wordArr);
+        const wordSet = new Set(words.words);
         return { wordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {

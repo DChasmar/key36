@@ -2,9 +2,9 @@ import React, { useCallback, useContext, useEffect, useState, createContext, use
 import { AppContext } from '../../App';
 import Key from './KeyF';
 import Spacebar from './SpacebarF';
-import compoundWordBank from './CompoundWordList.txt';
-import threeLetterWordBank from './ThreeLetterWords.txt';
-import sixLetterWordBank from './SixLetterWords.txt';
+import compoundWordBank from './CompoundWordList.json';
+import threeLetterWordBank from './ThreeLetterWords.json';
+import sixLetterWordBank from './SixLetterWords.json';
 import DordleGuesses from './DordleGuessesF';
 
 export const KeyboardFContext = createContext();
@@ -51,29 +51,20 @@ function KeyboardF() {
     const disableKeyPressRef = useRef(false);
 
     const generateCompoundWordSet = async () => {
-      const response = await fetch(compoundWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const randomCompoundWord = wordArr[Math.floor(Math.random() * wordArr.length)];
-      const compoundWordSet = new Set(wordArr);
+      const compoundWordSet = new Set(compoundWordBank.words);
+      const randomCompoundWord = [...compoundWordSet][Math.floor(Math.random() * compoundWordSet.size)];
       return { compoundWordSet, randomCompoundWord };
-    }
-
+    };
+    
     const generateThreeLetterWordSet = async () => {
-      const response = await fetch(threeLetterWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const threeLetterWordSet = new Set(wordArr);
+      const threeLetterWordSet = new Set(threeLetterWordBank.words);
       return { threeLetterWordSet };
-    }
-
+    };
+    
     const generateSixLetterWordSet = async () => {
-      const response = await fetch(sixLetterWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const sixLetterWordSet = new Set(wordArr);
+      const sixLetterWordSet = new Set(sixLetterWordBank.words);
       return { sixLetterWordSet };
-    }
+    };
     
     useEffect(() => {
       const fetchData = async () => {
@@ -89,10 +80,6 @@ function KeyboardF() {
     
       fetchData();
     }, []);
-
-    // useEffect(() => {
-    //   console.log(correctWord);
-    // }, [correctWord]);
 
     const addLetter = (key) => {
       let updatedKeys = [...keys0];

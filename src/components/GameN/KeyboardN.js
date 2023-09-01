@@ -2,10 +2,10 @@ import React, { useCallback, useContext, useEffect, useState, createContext, use
 import { AppContext } from '../../App';
 import Key from './KeyN';
 import Spacebar from './SpacebarN';
-import compoundWordBank from './CompoundWordList.txt';
-import fourLetterWordBank from '../FourLetterWords.txt';
-import fiveLetterWordBank from '../FiveLetterWords.txt';
-import nineLetterWordBank from '../NineLetterWords.txt';
+import compoundWordBank from './CompoundWordList.json';
+import fourLetterWordBank from '../FourLetterWords.json';
+import fiveLetterWordBank from '../FiveLetterWords.json';
+import nineLetterWordBank from '../NineLetterWords.json';
 import DordleGuesses from './DordleGuessesN';
 
 export const KeyboardNContext = createContext();
@@ -66,52 +66,40 @@ function KeyboardN() {
     const disableKeyPressRef = useRef(false);
 
     const generateCompoundWordSet = async () => {
-      const response = await fetch(compoundWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const randomCompoundWord = wordArr[Math.floor(Math.random() * wordArr.length)];
-      const compoundWordSet = new Set(wordArr);
-      return { compoundWordSet, randomCompoundWord };
-    }
-
+        const compoundWordSet = new Set(compoundWordBank.words);
+        const randomCompoundWord = [...compoundWordSet][Math.floor(Math.random() * compoundWordSet.size)];
+        return { compoundWordSet, randomCompoundWord };
+    };
+      
     const generateFourLetterWordSet = async () => {
-        const response = await fetch(fourLetterWordBank);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const fourLetterWordSet = new Set(wordArr);
+        const fourLetterWordSet = new Set(fourLetterWordBank.words);
         return { fourLetterWordSet };
-    }
+    };
 
     const generateFiveLetterWordSet = async () => {
-        const response = await fetch(fiveLetterWordBank);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const fiveLetterWordSet = new Set(wordArr);
+        const fiveLetterWordSet = new Set(fiveLetterWordBank.words);
         return { fiveLetterWordSet };
-      }
-
+    };
+      
     const generateNineLetterWordSet = async () => {
-        const response = await fetch(nineLetterWordBank);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const nineLetterWordSet = new Set(wordArr);
+        const nineLetterWordSet = new Set(nineLetterWordBank.words);
         return { nineLetterWordSet };
-    }
-    
+    };
+      
     useEffect(() => {
         const fetchData = async () => {
-        const compoundWords = await generateCompoundWordSet();
-        const fourLetterWords = await generateFourLetterWordSet();
-        const fiveLetterWords = await generateFiveLetterWordSet();
-        const nineLetterWords = await generateNineLetterWordSet();
-    
-        setCompoundWordSet(compoundWords.compoundWordSet);
-        setCorrectWord(compoundWords.randomCompoundWord);
-        setFourLetterWordSet(fourLetterWords.fourLetterWordSet);
-        setFiveLetterWordSet(fiveLetterWords.fiveLetterWordSet);
-        setNineLetterWordSet(nineLetterWords.nineLetterWordSet);
+          const compoundWords = await generateCompoundWordSet();
+          const fourLetterWords = await generateFourLetterWordSet();
+          const fiveLetterWords = await generateFiveLetterWordSet();
+          const nineLetterWords = await generateNineLetterWordSet();
+      
+          setCompoundWordSet(compoundWords.compoundWordSet);
+          setCorrectWord(compoundWords.randomCompoundWord);
+          setFourLetterWordSet(fourLetterWords.fourLetterWordSet);
+          setFiveLetterWordSet(fiveLetterWords.fiveLetterWordSet);
+          setNineLetterWordSet(nineLetterWords.nineLetterWordSet);
         };
-    
+      
         fetchData();
     }, []);
 
@@ -193,10 +181,6 @@ function KeyboardN() {
         const finalGreenKeys = Array.from(uniqueGreenKeys);
         const finalYellowKeys = Array.from(uniqueYellowKeys).filter(key => !uniqueGreenKeys.has(key));
         const finalGreyKeys = Array.from(uniqueGreyKeys).filter(key => !uniqueGreenKeys.has(key) && !uniqueYellowKeys.has(key));
-
-        // setGreenKeys(finalGreenKeys);
-        // setYellowKeys(finalYellowKeys);
-        // setGreyKeys(finalGreyKeys);
 
         setFinalColorKeys({
             green: finalGreenKeys,

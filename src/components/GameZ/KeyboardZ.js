@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState, createContext, use
 import { AppContext } from '../../App';
 import Key from './KeyZ';
 import Spacebar from './SpacebarZ';
-import words from './CuriousWords.txt'
+import words from './CuriousWords.json'
 
 export const KeyboardZContext = createContext();
 
@@ -37,12 +37,9 @@ function KeyboardZ() {
     const disableKeyPressRef = useRef(false);
 
     const generateWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const wordSet = new Set(wordArr);
+        const wordSet = new Set(words.words);
         return { wordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {

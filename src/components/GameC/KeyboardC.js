@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyC';
 import Spacebar from './SpacebarC';
-import words from './iWords.txt'
+import words from './iWords.json'
 
 export const KeyboardCContext = createContext();
 
@@ -26,12 +26,9 @@ function KeyboardC() {
     const disableKeyPressRef = useRef(false);
 
     const generateWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const wordSet = new Set(wordArr);
+        const wordSet = new Set(words.words);
         return { wordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {

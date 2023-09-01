@@ -3,8 +3,8 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyB';
 import Spacebar from './SpacebarB';
-import pangrams from './EightLetterPangrams.txt';
-import combinations from './EightLetterSets.txt';
+import pangrams from './EightLetterPangrams.json';
+import combinations from './EightLetterSets.json';
 import StarBox from './StarBoxB';
 
 export const KeyboardBContext = createContext();
@@ -31,22 +31,16 @@ function KeyboardB() {
 
     const disableKeyPressRef = useRef(false);
 
-    const generatePangramSet = async () => {
-        const response = await fetch(pangrams);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const pangramSet = new Set(wordArr);
-        return { pangramSet };
-    }
-
     const generateCombinationsSet = async () => {
-        const response = await fetch(combinations);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const randomCombination = wordArr[Math.floor(Math.random() * wordArr.length)];
-        const combinationsSet = new Set(wordArr);
+        const combinationsSet = new Set(combinations.words);
+        const randomCombination = [...combinationsSet][Math.floor(Math.random() * combinationsSet.size)];
         return { combinationsSet, randomCombination };
-    }
+    };
+      
+    const generatePangramSet = async () => {
+        const pangramSet = new Set(pangrams.words);
+        return { pangramSet };
+    };
 
     const findPangramWord = (combinationLetters, pangramSet) => {
         const lowercaseCombination = combinationLetters.map(letter => letter.toLowerCase());
@@ -142,24 +136,6 @@ function KeyboardB() {
             badWord();
         }
     };
-
-    // const addLetter = (key) => {
-    //     let updatedKeys = [...keys0];
-    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
-    //     if (emptyIndex >= 0) {
-    //         updatedKeys[emptyIndex] = key.toUpperCase();        
-    //     }
-    //     setKeys0(updatedKeys);
-    // };
-
-    // const removeLetter = () => {
-    //     let updatedKeys = [...keys0];
-    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
-    //     if (emptyIndex > 0 && emptyIndex < 8) {
-    //         updatedKeys[emptyIndex - 1] = '';
-    //     }
-    //     setKeys0(updatedKeys);
-    // };
 
     const addLetter = addLetterToArray(keys0, setKeys0);
 

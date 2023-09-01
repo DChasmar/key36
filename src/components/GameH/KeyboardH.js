@@ -3,8 +3,8 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyH';
 import Spacebar from './SpacebarH';
-import pangrams from './SevenLetterPangrams.txt'
-import combinations from './SevenLetterSets.txt'
+import pangrams from './SevenLetterPangrams.json'
+import combinations from './SevenLetterSets.json'
 import StarBox from './StarBoxH';
 
 export const KeyboardHContext = createContext();
@@ -31,22 +31,16 @@ function KeyboardH() {
 
     const disableKeyPressRef = useRef(false);
 
-    const generatePangramSet = async () => {
-        const response = await fetch(pangrams);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const pangramSet = new Set(wordArr);
-        return { pangramSet };
-    }
-
     const generateCombinationsSet = async () => {
-        const response = await fetch(combinations);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const randomCombination = wordArr[Math.floor(Math.random() * wordArr.length)];
-        const combinationsSet = new Set(wordArr);
+        const combinationsSet = new Set(combinations.words);
+        const randomCombination = [...combinationsSet][Math.floor(Math.random() * combinationsSet.size)];
         return { combinationsSet, randomCombination };
-    }
+    };
+      
+    const generatePangramSet = async () => {
+        const pangramSet = new Set(pangrams.words);
+        return { pangramSet };
+    };
 
     const findPangramWord = (combinationLetters, pangramSet) => {
         const lowercaseCombination = combinationLetters.map(letter => letter.toLowerCase());

@@ -2,9 +2,9 @@ import React, { useCallback, useContext, useEffect, useState, createContext, use
 import { AppContext } from '../../App';
 import Key from './KeyW';
 import Spacebar from './SpacebarW';
-import compoundWordBank from './CompoundWordList.txt';
-import fourLetterWordBank from '../FourLetterWords.txt';
-import eightLetterWordBank from './EightLetterWords.txt';
+import compoundWordBank from './CompoundWordList.json';
+import fourLetterWordBank from '../FourLetterWords.json';
+import eightLetterWordBank from './EightLetterWords.json';
 import DordleGuesses from './DordleGuessesW';
 
 export const KeyboardWContext = createContext();
@@ -53,29 +53,20 @@ function KeyboardW() {
     const disableKeyPressRef = useRef(false);
 
     const generateCompoundWordSet = async () => {
-      const response = await fetch(compoundWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const randomCompoundWord = wordArr[Math.floor(Math.random() * wordArr.length)];
-      const compoundWordSet = new Set(wordArr);
+      const compoundWordSet = new Set(compoundWordBank.words);
+      const randomCompoundWord = [...compoundWordSet][Math.floor(Math.random() * compoundWordSet.size)];
       return { compoundWordSet, randomCompoundWord };
-    }
-
+    };
+    
     const generateFourLetterWordSet = async () => {
-      const response = await fetch(fourLetterWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const fourLetterWordSet = new Set(wordArr);
+      const fourLetterWordSet = new Set(fourLetterWordBank.words);
       return { fourLetterWordSet };
-    }
-
+    };
+    
     const generateEightLetterWordSet = async () => {
-      const response = await fetch(eightLetterWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const eightLetterWordSet = new Set(wordArr);
+      const eightLetterWordSet = new Set(eightLetterWordBank.words);
       return { eightLetterWordSet };
-    }
+    };
     
     useEffect(() => {
       const fetchData = async () => {
@@ -91,10 +82,6 @@ function KeyboardW() {
     
       fetchData();
     }, []);
-
-    // useEffect(() => {
-    //   console.log(correctWord);
-    // }, [correctWord]);
 
     const addLetter = (key) => {
       let updatedKeys = [...keys0];

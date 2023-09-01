@@ -3,8 +3,8 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyT';
 import Spacebar from './SpacebarT';
-import oneSyllableWords from './oneSyllableSWords.txt'
-import sWords from './sWords.txt'
+import oneSyllableWords from './oneSyllableSWords.json'
+import sWords from './sWords.json'
 
 export const KeyboardTContext = createContext();
 
@@ -37,20 +37,14 @@ function KeyboardT() {
     const disableKeyPressRef = useRef(false);
 
     const generateOneSyllableWordSet = async () => {
-        const response = await fetch(oneSyllableWords);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const oneSyllableWordSet = new Set(wordArr);
+        const oneSyllableWordSet = new Set(oneSyllableWords.words);
         return { oneSyllableWordSet };
-    }
+    };
 
     const generateSWordSet = async () => {
-        const response = await fetch(sWords);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const sWordSet = new Set(wordArr);
+        const sWordSet = new Set(sWords.words);
         return { sWordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {
@@ -146,26 +140,8 @@ function KeyboardT() {
             setKeys3(starterKeys3);
             setSymbolResponse("");
             disableKeyPressRef.current = false;
-        }, 500);
+        }, 1500);
     }
-    
-    // const addLetter = (key) => {
-    //     let updatedKeys0 = [...keys0];
-    //     const emptyIndex = updatedKeys0.findIndex((val) => val === '');
-    //     if (emptyIndex >= 0) {
-    //         updatedKeys0[emptyIndex] = key.toUpperCase();        
-    //     }
-    //     setKeys0(updatedKeys0);
-    // }
-
-    // const removeLetter = () => {
-    //     let updatedKeys0 = [...keys0];
-    //     const emptyIndex = updatedKeys0.findIndex((val) => val === '');
-    //     if (emptyIndex > 0 && emptyIndex < 10) {
-    //         updatedKeys0[emptyIndex - 1] = '';
-    //     }
-    //     setKeys0(updatedKeys0);
-    // }
 
     const addLetter = addLetterToArray(keys0, setKeys0);
 

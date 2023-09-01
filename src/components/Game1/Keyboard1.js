@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './Key1';
 import Spacebar from './Spacebar1';
-import words from './qwertyuiop_words.txt'
+import words from './qwertyuiop_words.json'
 
 export const Keyboard1Context = createContext();
 
@@ -22,12 +22,9 @@ function Keyboard1() {
     const disableKeyPressRef = useRef(false);
 
     const generateWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const wordSet = new Set(wordArr);
+        const wordSet = new Set(words.words);
         return { wordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {

@@ -2,9 +2,9 @@ import React, { useCallback, useContext, useEffect, useState, createContext, use
 import { AppContext } from '../../App';
 import Key from './Key7';
 import Spacebar from './Spacebar7';
-import compoundWordBank from './CompoundWordList.txt';
-import fiveLetterWordBank from '../FiveLetterWords.txt';
-import tenLetterWordBank from './TenLetterWords.txt';
+import compoundWordBank from './CompoundWordList.json';
+import fiveLetterWordBank from '../FiveLetterWords.json';
+import tenLetterWordBank from './TenLetterWords.json';
 import DordleGuesses from './DordleGuesses7';
 
 export const Keyboard7Context = createContext();
@@ -51,29 +51,20 @@ function Keyboard7() {
     const disableKeyPressRef = useRef(false);
 
     const generateCompoundWordSet = async () => {
-      const response = await fetch(compoundWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const randomCompoundWord = wordArr[Math.floor(Math.random() * wordArr.length)];
-      const compoundWordSet = new Set(wordArr);
+      const compoundWordSet = new Set(compoundWordBank.words);
+      const randomCompoundWord = [...compoundWordSet][Math.floor(Math.random() * compoundWordSet.size)];
       return { compoundWordSet, randomCompoundWord };
-    }
-
+    };
+    
     const generateFiveLetterWordSet = async () => {
-      const response = await fetch(fiveLetterWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const fiveLetterWordSet = new Set(wordArr);
+      const fiveLetterWordSet = new Set(fiveLetterWordBank.words);
       return { fiveLetterWordSet };
-    }
-
+    };
+    
     const generateTenLetterWordSet = async () => {
-      const response = await fetch(tenLetterWordBank);
-      const result = await response.text();
-      const wordArr = result.split("\n");
-      const tenLetterWordSet = new Set(wordArr);
+      const tenLetterWordSet = new Set(tenLetterWordBank.words);
       return { tenLetterWordSet };
-    }
+    };
     
     useEffect(() => {
       const fetchData = async () => {

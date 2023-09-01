@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyO';
 import Spacebar from './SpacebarO';
-import words from './oWords.txt'
+import words from './oWords.json'
 
 export const KeyboardOContext = createContext();
 
@@ -26,12 +26,9 @@ function KeyboardO() {
     const disableKeyPressRef = useRef(false);
 
     const generateWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const wordSet = new Set(wordArr);
+        const wordSet = new Set(words.words);
         return { wordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {

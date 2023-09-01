@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyV';
 import Spacebar from './SpacebarV';
-import words from './ScrabbleWords12.txt'
+import words from './ScrabbleWords12.json'
 
 export const KeyboardVContext = createContext();
 
@@ -44,12 +44,9 @@ function KeyboardV() {
     const disableKeyPressRef = useRef(false);
 
     const generateWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const wordSet = new Set(wordArr);
+        const wordSet = new Set(words.words);
         return { wordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {
@@ -125,24 +122,6 @@ function KeyboardV() {
             badWord();
         }
     };
-
-    // const addLetter = (key) => {
-    //     let updatedKeys = [...keys0];
-    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
-    //     if (emptyIndex >= 0) {
-    //         updatedKeys[emptyIndex] = key.toUpperCase();        
-    //     }
-    //     setKeys0(updatedKeys);
-    // };
-
-    // const removeLetter = () => {
-    //     let updatedKeys = [...keys0];
-    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
-    //     if (emptyIndex > 0 && emptyIndex < 12) {
-    //         updatedKeys[emptyIndex - 1] = '';
-    //     }
-    //     setKeys0(updatedKeys);
-    // };
 
     const addLetter = addLetterToArray(keys0, setKeys0);
 

@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { addLetterToArray } from '../../utils';
 import Key from './KeyD';
 import Spacebar from './SpacebarD';
-import words from './ddWords.txt'
+import words from './ddWords.json'
 
 export const KeyboardDContext = createContext();
 
@@ -26,12 +26,9 @@ function KeyboardD() {
     const [ddWordSet, setDDWordSet] = useState(new Set());
   
     const generateDDWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const ddWordSet = new Set(wordArr);
+        const ddWordSet = new Set(words.words);
         return { ddWordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {

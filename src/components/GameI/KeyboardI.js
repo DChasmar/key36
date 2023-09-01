@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { addLetterToArray } from '../../utils';
 import Key from './KeyI';
 import Spacebar from './SpacebarI';
-import words from './CHwords.txt'
+import words from './CHwords.json'
 
 export const KeyboardIContext = createContext();
 
@@ -26,12 +26,9 @@ function KeyboardI() {
     const [cHWordSet, setCHWordSet] = useState(new Set());
   
     const generateCHWordSet = async () => {
-        const response = await fetch(words);
-        const result = await response.text();
-        const wordArr = result.split("\n");
-        const cHWordSet = new Set(wordArr);
+        const cHWordSet = new Set(words.words);
         return { cHWordSet };
-    }
+    };
       
     useEffect(() => {
         const fetchData = async () => {
