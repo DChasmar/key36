@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './KeyQ';
 import Spacebar from './SpacebarQ';
 
@@ -7,10 +8,10 @@ export const KeyboardQContext = createContext();
 
 function KeyboardQ() {
     const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
-    const [keys0, setKeys0] = useState(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
-    const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
-    const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
-    const [keys3, setKeys3] = useState(["Z", "X", "C", "V", "B", "N", "M"]);
+    const keys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+    const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
+    const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
+    const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
     const allKeys = [keys0, keys1, keys2, keys3]
 
     const [keys0Blue, setKeys0Blue] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -156,17 +157,7 @@ function KeyboardQ() {
             }
     }, [allKeys]);
 
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-          handleKeyboard(event);
-        };
-      
-        document.addEventListener("keydown", handleKeyDown);
-      
-        return () => {
-          document.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [handleKeyboard]);
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

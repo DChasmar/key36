@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
-import { addLetterToArray, removeLetterFromArray } from '../../utils';
+import { useKeydownEffect, addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './Key6';
 import Spacebar from './Spacebar6';
 
@@ -9,9 +9,9 @@ export const Keyboard6Context = createContext();
 function Keyboard6() {
     const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState(["", ""]);
-    const [keys1, setKeys1] = useState(["Q", "W", "", "R", "T", "Y", "", "", "", "P"]);
+    const keys1 =["Q", "W", "", "R", "T", "Y", "", "", "", "P"];
     const [keys2, setKeys2] = useState(["", "S", "D", "F", "G", "H", "J", "K", "L"]);
-    const [keys3, setKeys3] = useState(["Z", "X", "C", "V", "B", "N", "M"]);
+    const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
 
     const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
     const allKeys = [keys1, keys2, keys3]
@@ -87,26 +87,6 @@ function Keyboard6() {
         }
     };
 
-    // const addLetter = (key) => {
-    //     let updatedKeys = [...keys0];
-    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
-    //     if (emptyIndex >= 0) {
-    //         updatedKeys[emptyIndex] = key.toUpperCase();        
-    //     }
-    //     setKeys0(updatedKeys);
-    // };
-
-    // const removeLetter = () => {
-    //     let updatedKeys = [...keys0];
-    //     const emptyIndex = updatedKeys.findIndex((val) => val === '');
-    //     if (emptyIndex > 0 && emptyIndex < 10) {
-    //         updatedKeys[emptyIndex - 1] = '';
-    //     } else if (emptyIndex === -1) {
-            
-    //     }
-    //     setKeys0(updatedKeys);
-    // };
-
     const addLetter = addLetterToArray(keys0, setKeys0);
 
     const removeLetter = removeLetterFromArray(keys0, setKeys0);
@@ -146,13 +126,15 @@ function Keyboard6() {
           }
       }, [fauxKeys0, allKeys]);
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
+    // useEffect(() => {
+    //     document.addEventListener("keydown", handleKeyboard);
 
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    //     return () => {
+    //         document.removeEventListener("keydown", handleKeyboard);
+    //     };
+    // }, [handleKeyboard]);
+
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

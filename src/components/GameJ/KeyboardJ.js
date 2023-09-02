@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './KeyJ';
 import Spacebar from './SpacebarJ';
 import HundredsGrid from './HundredsGridJ'
@@ -8,7 +9,7 @@ export const KeyboardJContext = createContext();
 
 function KeyboardJ() {
     const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
-    const [keys0, setKeys0] = useState(["1", "2", "3", "4"]);
+    const keys0 = ["1", "2", "3", "4"];
     const [guess, setGuess] = useState("");
 
     const [colorArray, setColorArray] = useState([
@@ -128,14 +129,8 @@ function KeyboardJ() {
         }
     });
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
-
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
+    
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>
             <KeyboardJContext.Provider

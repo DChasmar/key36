@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
-import { addLetterToArray, removeLetterFromArray } from '../../utils';
+import { useKeydownEffect, addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './KeyT';
 import Spacebar from './SpacebarT';
 import oneSyllableWords from './oneSyllableSWords.json'
@@ -192,15 +192,9 @@ function KeyboardT() {
               }
             }
           }
-      }, [fauxKeys0, allKeys]);
+    }, [fauxKeys0, allKeys]);
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

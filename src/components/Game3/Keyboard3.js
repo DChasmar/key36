@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './Key3';
 import Spacebar from './Spacebar3';
 
@@ -236,10 +237,12 @@ function Keyboard3() {
     useEffect(() => {
       seeRedNumbers();
       seeRedLetters();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedKeys]);
 
     useEffect(() => {
       checkGameOver();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keys0Red, keys1Red, keys2Red, keys3Red]);
 
     const handleKeyboard = useCallback((event) => {
@@ -259,17 +262,19 @@ function Keyboard3() {
             }
     }, [allKeys]);
 
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-          handleKeyboard(event);
-        };
+    // useEffect(() => {
+    //     const handleKeyDown = (event) => {
+    //       handleKeyboard(event);
+    //     };
       
-        document.addEventListener("keydown", handleKeyDown);
+    //     document.addEventListener("keydown", handleKeyDown);
       
-        return () => {
-          document.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [handleKeyboard]);
+    //     return () => {
+    //       document.removeEventListener("keydown", handleKeyDown);
+    //     };
+    // }, [handleKeyboard]);
+
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

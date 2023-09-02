@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
-import { addLetterToArray, removeLetterFromArray } from '../../utils';
+import { useKeydownEffect, addLetterToArray, removeLetterFromArray } from '../../utils';
 import Key from './Key1';
 import Spacebar from './Spacebar1';
 import words from './qwertyuiop_words.json'
@@ -96,6 +96,7 @@ function Keyboard1() {
 
     useEffect(() => {
         checkWord()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keys0]);
 
     const handleKeyboard = useCallback((event) => {
@@ -120,13 +121,7 @@ function Keyboard1() {
         }
     });
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

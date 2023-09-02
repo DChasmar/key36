@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './KeyZ';
 import Spacebar from './SpacebarZ';
 import words from './CuriousWords.json'
@@ -9,9 +10,9 @@ export const KeyboardZContext = createContext();
 function KeyboardZ() {
     const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
     const [keys0, setKeys0] = useState([""]);
-    const [keys1, setKeys1] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]);
-    const [keys2, setKeys2] = useState(["A", "S", "D", "F", "G", "H", "J", "K", "L"]);
-    const [keys3, setKeys3] = useState(["Z", "X", "C", "V", "B", "N", "M"]);
+    const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
+    const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
+    const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
 
     const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
     const allKeys = [keys1, keys2, keys3]
@@ -133,6 +134,7 @@ function KeyboardZ() {
 
     useEffect(() => {
         checkWord();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keys0]);
 
     const handleKeyboard = useCallback((event) => {
@@ -161,13 +163,15 @@ function KeyboardZ() {
           }
       }, [fauxKeys0, allKeys]);
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
+    // useEffect(() => {
+    //     document.addEventListener("keydown", handleKeyboard);
 
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    //     return () => {
+    //         document.removeEventListener("keydown", handleKeyboard);
+    //     };
+    // }, [handleKeyboard]);
+
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

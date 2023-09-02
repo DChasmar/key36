@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './Key0';
 import Spacebar from './Spacebar0';
 import words from './NoRepeats.json'
@@ -193,13 +194,15 @@ function Keyboard0() {
           }
       }, [fauxKeys0, allKeys]);
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
+    // useEffect(() => {
+    //     document.addEventListener("keydown", handleKeyboard);
 
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    //     return () => {
+    //         document.removeEventListener("keydown", handleKeyboard);
+    //     };
+    // }, [handleKeyboard]);
+
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

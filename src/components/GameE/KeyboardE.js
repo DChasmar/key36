@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './KeyE';
 import Spacebar from './SpacebarE';
 
@@ -159,13 +160,7 @@ function KeyboardE() {
         }
     });
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

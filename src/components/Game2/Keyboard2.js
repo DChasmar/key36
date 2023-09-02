@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './Key2';
 import Spacebar from './Spacebar2';
 import { BiSolidLeftArrowAlt, BiSolidRightArrowAlt } from 'react-icons/bi';
@@ -179,6 +180,7 @@ function Keyboard2() {
 
     useEffect(() => {
         registerAndReset()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keys1]);
 
     const handleKeyboard = useCallback((event) => {
@@ -199,13 +201,15 @@ function Keyboard2() {
         }
     });
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
+    // useEffect(() => {
+    //     document.addEventListener("keydown", handleKeyboard);
 
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    //     return () => {
+    //         document.removeEventListener("keydown", handleKeyboard);
+    //     };
+    // }, [handleKeyboard]);
+
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     // useEffect(() => {
     //     // Retrieve factorsList from localStorage if it exists

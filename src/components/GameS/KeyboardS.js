@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect } from '../../utils';
 import Key from './KeyS';
 import Spacebar from './SpacebarS';
 import HundredsGrid from './HundredsGridS'
@@ -8,7 +9,7 @@ export const KeyboardSContext = createContext();
 
 function KeyboardS() {
     const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
-    const [keys0, setKeys0] = useState(["1", "2", "3"]);
+    const keys0 = ["1", "2", "3"];
     const [guess, setGuess] = useState("");
 
     const [colorArray, setColorArray] = useState([
@@ -127,13 +128,7 @@ function KeyboardS() {
         }
     });
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboard);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyboard);
-        };
-    }, [handleKeyboard]);
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>

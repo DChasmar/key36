@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
+import { useKeydownEffect, updateDordleColors } from '../../utils';
 import Key from './KeyF';
 import Spacebar from './SpacebarF';
 import compoundWordBank from './CompoundWordList.json';
@@ -103,45 +104,51 @@ function KeyboardF() {
       setKeys0(updatedKeys);
     };
 
+    // const findKeyboardColors = (colorKeys, value) => {
+    //   setKeys1DordleColors(prevKeys1DordleColors => {
+    //     let newKeys1DordleColors = [...prevKeys1DordleColors];
+    //     for (let key of colorKeys) {
+    //       let index1 = keys1.indexOf(key.toUpperCase());
+    //       if (index1 !== -1) {
+    //         newKeys1DordleColors[index1] = value;
+    //       }
+    //     }
+    //     return newKeys1DordleColors;
+    //   });
+    
+    //   setKeys2DordleColors(prevKeys2DordleColors => {
+    //     let newKeys2DordleColors = [...prevKeys2DordleColors];
+    //     for (let key of colorKeys) {
+    //       let index2 = keys2.indexOf(key.toUpperCase());
+    //       if (index2 !== -1) {
+    //         newKeys2DordleColors[index2] = value;
+    //       }
+    //     }
+    //     return newKeys2DordleColors;
+    //   });
+    
+    //   setKeys3DordleColors(prevKeys3DordleColors => {
+    //     let newKeys3DordleColors = [...prevKeys3DordleColors];
+    //     for (let key of colorKeys) {
+    //       let index3 = keys3.indexOf(key.toUpperCase());
+    //       if (index3 !== -1) {
+    //         newKeys3DordleColors[index3] = value;
+    //       }
+    //     }
+    //     return newKeys3DordleColors;
+    //   });
+    // };
+
     const findKeyboardColors = (colorKeys, value) => {
-      setKeys1DordleColors(prevKeys1DordleColors => {
-        let newKeys1DordleColors = [...prevKeys1DordleColors];
-        for (let key of colorKeys) {
-          let index1 = keys1.indexOf(key.toUpperCase());
-          if (index1 !== -1) {
-            newKeys1DordleColors[index1] = value;
-          }
-        }
-        return newKeys1DordleColors;
-      });
-    
-      setKeys2DordleColors(prevKeys2DordleColors => {
-        let newKeys2DordleColors = [...prevKeys2DordleColors];
-        for (let key of colorKeys) {
-          let index2 = keys2.indexOf(key.toUpperCase());
-          if (index2 !== -1) {
-            newKeys2DordleColors[index2] = value;
-          }
-        }
-        return newKeys2DordleColors;
-      });
-    
-      setKeys3DordleColors(prevKeys3DordleColors => {
-        let newKeys3DordleColors = [...prevKeys3DordleColors];
-        for (let key of colorKeys) {
-          let index3 = keys3.indexOf(key.toUpperCase());
-          if (index3 !== -1) {
-            newKeys3DordleColors[index3] = value;
-          }
-        }
-        return newKeys3DordleColors;
-      });
+        updateDordleColors(colorKeys, value, keys1, setKeys1DordleColors);
+        updateDordleColors(colorKeys, value, keys2, setKeys2DordleColors);
+        updateDordleColors(colorKeys, value, keys3, setKeys3DordleColors);
     };
 
     useEffect(() => {
-      findKeyboardColors(greyKeys, 0)
-      findKeyboardColors(yellowKeys, 1)
-      findKeyboardColors(greenKeys, 2)
+        findKeyboardColors(greyKeys, 0)
+        findKeyboardColors(yellowKeys, 1)
+        findKeyboardColors(greenKeys, 2)
     }, [greenKeys, yellowKeys, greyKeys]);
 
     const registerAndReset = (updatedGuessColors) => {
@@ -399,17 +406,7 @@ function KeyboardF() {
         }
     }, [fauxKeys0, allKeys]);
 
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-          handleKeyboard(event);
-        };
-      
-        document.addEventListener("keydown", handleKeyDown);
-      
-        return () => {
-          document.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [handleKeyboard]);
+    useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>
