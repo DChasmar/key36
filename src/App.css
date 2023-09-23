@@ -30,7 +30,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 5px;
+  margin: 1px;
 }
 
 .key {
@@ -352,4 +352,17 @@
 .hexagon-letter.hexagon-letter-grey {
   color: grey;
   font-weight: 300;
+}
+
+@media only screen and ((max-width: 768px) or (max-height: 400px)) {
+  .key {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    margin: 3px;
+  }
+
+  .spacebar {
+    width: 200px;
+  }
 }
