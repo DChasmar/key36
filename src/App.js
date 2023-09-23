@@ -1,6 +1,7 @@
 import './App.css';
 import Keyboard from './components/Keyboard';
-import { createContext, useState, lazy, Suspense } from 'react';
+import { createContext, useState, lazy, Suspense, useEffect } from 'react';
+import { readSavedGameProgress, writeSavedGameProgress } from './utils';
 
 const generateKeyboardComponent = (letter) => {
   return lazy(() => import(`./components/Game${letter}/Keyboard${letter}`));
@@ -14,12 +15,11 @@ function App() {
         gameNumber: '',
     })
 
-    const [keysColor, setKeysColor] = useState([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0]
-    ]);
+    const [keysColor, setKeysColor] = useState(readSavedGameProgress());
+
+    useEffect(() => {
+      writeSavedGameProgress(keysColor);
+    }, [keysColor]);
   
     const chooseGame = (keyVal) => {
         if (gameChosen.gameChosen === true) return;
