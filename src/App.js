@@ -1,5 +1,6 @@
 import './App.css';
 import Keyboard from './components/Keyboard';
+import HelpButton from './components/HelpButton';
 import { createContext, useState, lazy, Suspense, useEffect } from 'react';
 import { readSavedGameProgress, writeSavedGameProgress } from './utils';
 
@@ -20,6 +21,18 @@ function App() {
     useEffect(() => {
       writeSavedGameProgress(keysColor);
     }, [keysColor]);
+
+    const modalContent = (
+      <div>
+        <p>This website is designed to be used without instructions.</p>
+        <p>Instructions:</p>
+        <ul>
+          <li>Each keyboard key leads to a different game.</li>
+          <li>When you complete a game, the key on the homepage will turn blue.</li>
+          <li>To return to the homepage, press the spacebar.</li>
+        </ul>
+      </div>
+    );
   
     const chooseGame = (keyVal) => {
         if (gameChosen.gameChosen === true) return;
@@ -39,11 +52,12 @@ function App() {
             keysColor,
             setKeysColor,}}>
           <div className='game'>
-              {gameChosen.gameNumber ? (
-                <Suspense fallback={<Keyboard />}>
-                  <KeyboardComponent />
-                </Suspense>
-              ) : <Keyboard />}
+          <HelpButton content={modalContent} />
+            {gameChosen.gameNumber ? (
+              <Suspense fallback={<Keyboard />}>
+                <KeyboardComponent />
+              </Suspense>
+            ) : <Keyboard />}
           </div>
 
         </AppContext.Provider>
