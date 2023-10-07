@@ -25,7 +25,9 @@ function App() {
     const modalContent = (
       <div>
         <p>This website is designed to be used without instructions.</p>
-        <p>Instructions:</p>
+        <p>
+          <strong>Instructions:</strong>
+        </p>
         <ul>
           <li>Each keyboard key leads to a different game.</li>
           <li>When you complete a game, the key on the homepage will turn blue.</li>

@@ -1,8 +1,7 @@
-// HelpModal.js
 import React from 'react';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#root'); // Set the root element for accessibility
+Modal.setAppElement('#root');
 
 function HelpModal({ isOpen, onRequestClose, content }) {
   return (
@@ -12,6 +11,7 @@ function HelpModal({ isOpen, onRequestClose, content }) {
       contentLabel="Help Modal"
       className="help-modal"
       overlayClassName="help-modal-overlay"
+      shouldCloseOnOverlayClick={true}
     >
       <div>
         <button className="close-button" onClick={onRequestClose}>

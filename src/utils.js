@@ -73,3 +73,14 @@ export function readSavedGameProgress() {
 export function writeSavedGameProgress(value) {
   localStorage.setItem(GAME_PROGRESS_LOCAL_STORAGE_KEY, JSON.stringify(value));
 }
+
+export function randomWordle() {
+    // Generate two random numbers between 3 and 6 (inclusive)
+    const randomNumber1 = Math.floor(Math.random() * 4) + 3; // Generates 3, 4, 5, or 6
+    const randomNumber2 = Math.floor(Math.random() * 4) + 3; // Generates 3, 4, 5, or 6
+  
+    // Create an array with the two random numbers
+    const result = [randomNumber1, randomNumber2];
+  
+    return result;
+}

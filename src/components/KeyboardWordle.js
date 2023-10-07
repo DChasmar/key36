@@ -1,25 +1,28 @@
 import React, { useCallback, useContext, useEffect, useState, createContext, useRef } from 'react';
 import { AppContext } from '../../App';
-import { useKeydownEffect, updateDordleColors } from '../../utils';
-import Key from './KeyN';
-import Spacebar from './SpacebarN';
+import { useKeydownEffect, updateDordleColors, randomWordle } from '../../utils';
+import Key from './Key';
+import Spacebar from './Spacebar';
 import compoundWordBank from './CompoundWordList.json';
 import fourLetterWordBank from '../FourLetterWords.json';
 import fiveLetterWordBank from '../FiveLetterWords.json';
 import nineLetterWordBank from '../NineLetterWords.json';
-import DordleGuesses from './DordleGuessesN';
+import DordleGuesses from './DordleGuesses';
 
-export const KeyboardNContext = createContext();
+export const KeyboardWordleContext = createContext();
 
-function KeyboardN() {
+function KeyboardWordle() {
     const { setGameChosen, keysColor, setKeysColor } = useContext(AppContext);
-    const [keys0, setKeys0] = useState(["", "", "", "", ""]);
+
+    const randomDigits = randomWordle();
+
+    const [keys0, setKeys0] = useState(new Array(randomDigits[0]).fill(""));
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
     const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
     const allKeys = [keys1, keys2, keys3];
 
-    const [keys0DordleColors, setKeys0DordleColors] = useState([-1, -1, -1, -1, -1]);
+    const [keys0DordleColors, setKeys0DordleColors] = useState(new Array(randomDigits[0]).fill(-1));
     const [keys1DordleColors, setKeys1DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     const [keys2DordleColors, setKeys2DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1, -1, -1]);
     const [keys3DordleColors, setKeys3DordleColors] = useState([-1, -1, -1, -1, -1, -1, -1]);
@@ -32,23 +35,23 @@ function KeyboardN() {
     const[finalColorKeys, setFinalColorKeys] = useState([]);
 
     const [guesses, setGuesses] = useState([
-        ["", "", "", "", ""],
-        ["", "", "", "", ""],
-        ["", "", "", "", ""],
-        ["", "", "", ""],
-        ["", "", "", ""],
-        ["", "", "", ""],
-        ["", "", "", "", "", "", "", "", ""]
+        new Array(randomDigits[0]).fill(""),
+        new Array(randomDigits[0]).fill(""),
+        new Array(randomDigits[0]).fill(""),
+        new Array(randomDigits[1]).fill(""),
+        new Array(randomDigits[1]).fill(""),
+        new Array(randomDigits[1]).fill(""),
+        new Array(randomDigits[0] + randomDigits[1]).fill("")
     ]);
     
     const [guessColors, setGuessColors] = useState([
-        [-1, -1, -1, -1, -1], 
-        [-1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1],
-        [-1, -1, -1, -1], 
-        [-1, -1, -1, -1],
-        [-1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1]
+        new Array(randomDigits[0]).fill(-1),
+        new Array(randomDigits[0]).fill(-1),
+        new Array(randomDigits[0]).fill(-1),
+        new Array(randomDigits[1]).fill(-1),
+        new Array(randomDigits[1]).fill(-1),
+        new Array(randomDigits[1]).fill(-1),
+        new Array(randomDigits[0] + randomDigits[1]).fill(-1)
     ]);
 
     const [turnCounter, setTurnCounter] = useState(0);
@@ -56,9 +59,9 @@ function KeyboardN() {
     const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
     const [compoundWordSet, setCompoundWordSet] = useState(new Set());
-    const [fourLetterWordSet, setFourLetterWordSet] = useState(new Set());
-    const [fiveLetterWordSet, setFiveLetterWordSet] = useState(new Set());
-    const [nineLetterWordSet, setNineLetterWordSet] = useState(new Set());
+    const [firstWordSet, setFirstWordSet] = useState(new Set());
+    const [secondWordSet, setSecondWordSet] = useState(new Set());
+    const [bothWordSet, setBothWordSet] = useState(new Set());
     const [correctWord, setCorrectWord] = useState("");
     const [wordReveal, setWordReveal] = useState("");
 
@@ -72,17 +75,17 @@ function KeyboardN() {
         return { compoundWordSet, randomCompoundWord };
     };
       
-    const generateFourLetterWordSet = async () => {
+    const generateFirstWordSet = async () => {
         const fourLetterWordSet = new Set(fourLetterWordBank.words);
         return { fourLetterWordSet };
     };
 
-    const generateFiveLetterWordSet = async () => {
+    const generateSecondWordSet = async () => {
         const fiveLetterWordSet = new Set(fiveLetterWordBank.words);
         return { fiveLetterWordSet };
     };
       
-    const generateNineLetterWordSet = async () => {
+    const generateBothWordSet = async () => {
         const nineLetterWordSet = new Set(nineLetterWordBank.words);
         return { nineLetterWordSet };
     };
@@ -90,15 +93,15 @@ function KeyboardN() {
     useEffect(() => {
         const fetchData = async () => {
           const compoundWords = await generateCompoundWordSet();
-          const fourLetterWords = await generateFourLetterWordSet();
-          const fiveLetterWords = await generateFiveLetterWordSet();
-          const nineLetterWords = await generateNineLetterWordSet();
+          const firstWords = await generateFirstWordSet();
+          const secondWords = await generateSecondWordSet();
+          const bothWords = await generateBothWordSet();
       
           setCompoundWordSet(compoundWords.compoundWordSet);
           setCorrectWord(compoundWords.randomCompoundWord);
-          setFourLetterWordSet(fourLetterWords.fourLetterWordSet);
-          setFiveLetterWordSet(fiveLetterWords.fiveLetterWordSet);
-          setNineLetterWordSet(nineLetterWords.nineLetterWordSet);
+          setFirstWordSet(fourLetterWords.fourLetterWordSet);
+          setSecondWordSet(fiveLetterWords.fiveLetterWordSet);
+          setBothWordSet(nineLetterWords.nineLetterWordSet);
         };
       
         fetchData();
@@ -215,22 +218,22 @@ function KeyboardN() {
                     setCorrectWord(randomCompoundWord);
                     setKeys0DordleColors([-1, -1, -1, -1, -1]);
                     setGuesses([
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", ""],
-                        ["", "", "", ""],
-                        ["", "", "", ""],
-                        ["", "", "", "", "", "", "", "", ""]
+                        new Array(randomDigits[0]).fill(""),
+                        new Array(randomDigits[0]).fill(""),
+                        new Array(randomDigits[0]).fill(""),
+                        new Array(randomDigits[1]).fill(""),
+                        new Array(randomDigits[1]).fill(""),
+                        new Array(randomDigits[1]).fill(""),
+                        new Array(randomDigits[0] + randomDigits[1]).fill("")
                     ]);           
                     setGuessColors([
-                        [-1, -1, -1, -1, -1], 
-                        [-1, -1, -1, -1, -1],
-                        [-1, -1, -1, -1, -1],
-                        [-1, -1, -1, -1], 
-                        [-1, -1, -1, -1],
-                        [-1, -1, -1, -1],
-                        [-1, -1, -1, -1, -1, -1, -1, -1, -1]
+                        new Array(randomDigits[0]).fill(-1),
+                        new Array(randomDigits[0]).fill(-1),
+                        new Array(randomDigits[0]).fill(-1),
+                        new Array(randomDigits[1]).fill(-1),
+                        new Array(randomDigits[1]).fill(-1),
+                        new Array(randomDigits[1]).fill(-1),
+                        new Array(randomDigits[0] + randomDigits[1]).fill(-1)
                     ]);
                     setKeys0DordleColors([-1, -1, -1, -1, -1]);
                     setKeys1DordleColors([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
@@ -446,7 +449,7 @@ function KeyboardN() {
 
     return (
         <div className="keyboard" onKeyDown={handleKeyboard}>
-            <KeyboardNContext.Provider
+            <KeyboardWordleContext.Provider
                 value={{
                 addLetter,
                 guesses,
@@ -481,10 +484,10 @@ function KeyboardN() {
             </div>
             <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>
             {wordReveal ? (<h1>{wordReveal.toUpperCase()}</h1>) : (<div className='line5'><DordleGuesses /></div>)}
-            </KeyboardNContext.Provider>
+            </KeyboardWordleContext.Provider>
         </div>
     )
 
 }
 
-export default KeyboardN
+export default KeyboardWordle
