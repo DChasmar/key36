@@ -165,7 +165,8 @@ function KeyboardG() {
             <KeyboardGContext.Provider
                 value={{
                 addLetter,
-                removeLetter
+                removeLetter,
+                disableKeyPressRef
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;

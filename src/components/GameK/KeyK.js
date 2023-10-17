@@ -9,11 +9,13 @@ import { BiSolidChess, BiSolidLock } from 'react-icons/bi';
 import { ImClubs } from 'react-icons/im';
 
 
-function Key({ keyVal, dark, clickableKey, blank }) {
-  const { addNumber } = useContext(KeyboardKContext);
+function Key({ keyVal, keyLine, guessKey }) {
+  const { addLetter, removeLetter } = useContext(KeyboardKContext);
   const selectLetter = () => {
-    if (clickableKey) {
-      addNumber(keyVal);
+    if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
+      addLetter(keyVal);
+    } else if (keyLine === 0) {
+      removeLetter();
     };
   };
 
@@ -84,7 +86,7 @@ function Key({ keyVal, dark, clickableKey, blank }) {
   };
 
   return (
-      <div className={ blank ? 'key run_key' : dark ? 'key dark_key' : 'key' } onClick={selectLetter}>
+      <div className={ guessKey ? 'key guess_key' : 'key' } onClick={selectLetter}>
         {iconComponent}
       </div>
     )

@@ -3,8 +3,6 @@ import { FaTimes } from '../IconModule';
 
 function HundredsUnit( { keyVal, color, next } ) {
 
-    const fontSize = '120%';
-
     let boxColor;
 
     const squares = ["1", "4", "9", "16", "25", "36", "49", "64", "81", "100"];
@@ -35,7 +33,7 @@ function HundredsUnit( { keyVal, color, next } ) {
 
     return (
         <div className= {'key hundreds_key'} 
-        style= {next ? { backgroundColor: '#ddd', border: '1.5px solid black' } : { backgroundColor: boxColor, fontSize }}>
+        style= {{ backgroundColor: boxColor }}>
             {iconComponent}
         </div>
     )

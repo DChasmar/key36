@@ -14,9 +14,6 @@ function Keyboard9() {
     const [keys3, setKeys3] = useState(["Z", "X", "C", "V", "B", "N", "M"]);
 
     const fauxKeys0 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-    const fauxKeys1 = ["Q", "W", "E", "R", "T", "T", "R", "E", "W", "Q"]
-    const fauxKeys2 = ["A", "S", "D", "F", "G", "F", "D", "S", "A"]
-    const fauxKeys3 = ["Z", "X", "C", "V", "C", "X", "Z"]
     const allKeys = [keys1, keys2, keys3]
 
     const [wordList, setWordList] = useState([])
@@ -74,11 +71,6 @@ function Keyboard9() {
     const badWord = () => {
         setSymbolResponse("times");
         disableKeyPressRef.current = true;
-        if (keys0.length !== 1) {
-            setKeys1(fauxKeys1)
-            setKeys2(fauxKeys2)
-            setKeys3(fauxKeys3)
-        }
         setTimeout(() => {
             let length = keys0.length;
             let updatedKeys0 = keys0
@@ -164,13 +156,6 @@ function Keyboard9() {
           }
       }, [fauxKeys0, allKeys]);
 
-    // useEffect(() => {
-    //     document.addEventListener("keydown", handleKeyboard);
-
-    //     return () => {
-    //         document.removeEventListener("keydown", handleKeyboard);
-    //     };
-    // }, [handleKeyboard]);
 
     useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
@@ -179,7 +164,8 @@ function Keyboard9() {
             <Keyboard9Context.Provider
                 value={{
                 addLetter,
-                removeLetter
+                removeLetter,
+                disableKeyPressRef
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;

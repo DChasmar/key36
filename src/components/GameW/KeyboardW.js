@@ -101,7 +101,7 @@ function KeyboardW() {
       if (emptyIndex > 0 && emptyIndex < 8) {
           updatedKeys[emptyIndex - 1] = '';
           if (turnCounter < 3) {
-            updatedKeys[emptyIndex + 4] = '';
+            updatedKeys[emptyIndex + 3] = '';
       }}
       setKeys0(updatedKeys);
     };
@@ -383,14 +383,16 @@ function KeyboardW() {
             <KeyboardWContext.Provider
                 value={{
                 addLetter,
+                removeLetter,
                 guesses,
                 guessColors,
-                turnCounter}}>
+                turnCounter,
+                disableKeyPressRef}}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
                 return (
                   <React.Fragment key={uniqueKey}>
-                  <Key keyVal={key} dark color={keys0DordleColors[index]} />
+                  <Key keyVal={key} dark color={keys0DordleColors[index]} keyLine={0} />
                   {index === 3 && turnCounter < 3 && <div className='divider'>|</div>}
                   </React.Fragment>
                 );
@@ -399,19 +401,19 @@ function KeyboardW() {
                 {keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
                 return <Key keyVal={key} color={keys1DordleColors[index]} 
-                  key={uniqueKey} />;
+                  key={uniqueKey} keyLine={1} />;
             })}</div>
             <div className='line2'>
               {keys2.map((key, index) => {
               const uniqueKey = `2-${index}`;
               return <Key keyVal={key} color={keys2DordleColors[index]} 
-              key={uniqueKey}/>;
+              key={uniqueKey} keyLine={2} />;
               })}
             </div>
             <div className='line3'>{keys3.map((key, index) => {
               const uniqueKey = `3-${index}`;
                 return <Key keyVal={key} color={keys3DordleColors[index]} 
-                  key={uniqueKey} />;
+                  key={uniqueKey} keyLine={3} />;
                 })}
             </div>
             <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>

@@ -17,7 +17,7 @@ function TriangleUnit( { keyVal, correct, column } ) {
 
     return (
         <div className= 'key triangle_key' 
-        style={correct ? {backgroundColor: `rgb(${redLevel}, ${greenLevel}, ${blueLevel})`, color: '#000', border: 'solid #000'} : undefined} >
+        style={correct ? {backgroundColor: `rgb(${redLevel}, ${greenLevel}, ${blueLevel})`} : undefined} >
             {iconComponent}
         </div>
     )

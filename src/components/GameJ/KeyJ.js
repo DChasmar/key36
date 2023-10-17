@@ -22,7 +22,7 @@ function Key({ keyVal, clickableKey }) {
     }
 
   return (
-      <div className={'key dark_key'} style={{ backgroundColor: boxColor }} onClick={selectLetter}>
+      <div className='key' style={{ backgroundColor: boxColor }} onClick={selectLetter}>
         {keyVal}
       </div>
     )

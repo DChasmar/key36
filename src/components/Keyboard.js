@@ -10,7 +10,14 @@ function Keyboard() {
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
     const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
-    const allKeys = [keys0, keys1, keys2, keys3]
+    const allKeys = [keys0, keys1, keys2, keys3];
+
+    const gameNames = [
+        ["WORDS", "NUMBERS", "LOGIC", "MAZE", "LOGIC", "1 VOWEL", "WORDLE", "NUMBERS", "WORDS", "WORDS"],
+        ["MAZE", "WORDLE", "NUMBERS", "LOGIC", "WORDS", "PUZZLE", "100 GRID", "WORDS", "1 VOWEL", "NUMBERS"],
+        ["1 VOWEL", "100 GRID", "WORDS", "WORDLE", "SCRABBY", "ANAGRAM", "100 GRID", "PUZZLE", "WORDLE"],
+        ["CURIOUS", "NUMBERS", "1 VOWEL", "SCRABBY", "ANAGRAM", "WORDLE", "CURIOUS"]
+    ];
     
     const handleKeyboard = useCallback((event) => {
         for (const keys of allKeys) {
@@ -35,19 +42,19 @@ function Keyboard() {
         <div className="keyboard" onKeyDown={handleKeyboard}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keysColor[0][index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[0][index] === 1} game={gameNames[0][index]} />;
             })}</div>
             <div className='line1'>{keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keysColor[1][index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[1][index] === 1} game={gameNames[1][index]} />;
             })}</div>
             <div className='line2'>{keys2.map((key, index) => {
                 const uniqueKey = `2-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keysColor[2][index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[2][index] === 1} game={gameNames[2][index]} />;
             })}</div>
             <div className='line3'>{keys3.map((key, index) => {
                 const uniqueKey = `3-${index}`;
-                return <Key keyVal={key} key={uniqueKey} blue={keysColor[3][index] === 1} />;
+                return <Key keyVal={key} key={uniqueKey} blue={keysColor[3][index] === 1} game={gameNames[3][index]} />;
                 })}
             </div>
         </div>

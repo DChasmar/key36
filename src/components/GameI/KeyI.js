@@ -4,13 +4,15 @@ import { TbLetterC, TbLetterH } from 'react-icons/tb';
 import { GoDotFill } from '../IconModule';
 
 function Key({ keyVal, guessKey, keyLine }) {
-    const { addNumber, removeNumber } = useContext(KeyboardIContext);
+    const { addLetter, removeLetter, disableKeyPressRef } = useContext(KeyboardIContext);
     const selectLetter = () => {
-        if (keyLine === 0) {
-          removeNumber(keyVal);
-        } else {
-          addNumber(keyVal);
-        }
+      if (disableKeyPressRef.current) {
+        return;
+      } else if (keyLine === 0) {
+        removeLetter();
+      } else {
+        addLetter(keyVal);
+      }
     };
 
     let iconComponent = null;

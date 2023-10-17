@@ -284,7 +284,7 @@ function Keyboard5() {
                 return <Key keyVal={key}
                   key={uniqueKey}
                   red={keys0Red[index] === 0}
-                  style={selectedKeys[0] === key ? { border: '3px solid #444444' } : {}} />;
+                  style={selectedKeys[0] === key ? { color: 'yellow' } : {}} />;
             })}</div>
             <div className='line1'>
                 {keys1.map((key, index) => {
@@ -292,7 +292,7 @@ function Keyboard5() {
                 return <Key keyVal={key}
                   key={uniqueKey}
                   red={keys1Red[index] === 0}
-                  style={selectedKeys[0] === key ? { border: '3px solid #444444' } : {}} />;
+                  style={selectedKeys[0] === key ? { color: 'yellow' } : {}} />;
             })}</div>
             <div className='line2'>
               {keys2.map((key, index) => {
@@ -300,14 +300,14 @@ function Keyboard5() {
               return <Key keyVal={key} 
               key={uniqueKey}
               red={keys2Red[index] === 0}
-              style={selectedKeys[0] === key ? { border: '3px solid #444444' } : {}} />;})}
+              style={selectedKeys[0] === key ? { color: 'yellow' } : {}} />;})}
             </div>
             <div className='line3'>{keys3.map((key, index) => {
               const uniqueKey = `3-${index}`;
                 return <Key keyVal={key}
                   key={uniqueKey}
                   red={keys3Red[index] === 0}
-                  style={selectedKeys[0] === key ? { border: '3px solid #444444' } : {}} />;
+                  style={selectedKeys[0] === key ? { color: 'yellow' } : {}} />;
                 })}
             </div>
             <div className='line4'>< Spacebar keyVal={response} /></div>

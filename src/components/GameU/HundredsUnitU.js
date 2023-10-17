@@ -2,8 +2,9 @@ import React from 'react'
 import { FaTimes } from '../IconModule';
 
 function HundredsUnit( { keyVal, color, next } ) {
-
-  const fontSize = keyVal.length > 3 ? 60 / keyVal.length : '120%';
+  const divisor = getComputedStyle(document.documentElement).getPropertyValue('--font-divisor');
+  console.log(divisor);
+  const fontSize = keyVal.length > 3 ? `${5 * divisor / keyVal.length}%` : `${2 * divisor}%`;
 
   let boxColor;
 
@@ -33,7 +34,7 @@ function HundredsUnit( { keyVal, color, next } ) {
 
   return (
     <div className= {'key hundreds_key'} 
-      style= {next ? { backgroundColor: '#ddd', border: '1.5px solid black' } : { backgroundColor: boxColor, fontSize }}>
+      style= {next ? { backgroundColor: '#ddd' } : { backgroundColor: boxColor, fontSize }}>
         {iconComponent}
     </div>
   )

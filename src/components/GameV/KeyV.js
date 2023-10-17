@@ -2,9 +2,11 @@ import React, { useContext } from 'react'
 import { KeyboardVContext } from './KeyboardV';
 
 function Key({ keyVal, pointVal, keyLine, guessKey }) {
-    const { addLetter, removeLetter } = useContext(KeyboardVContext);
+    const { addLetter, removeLetter, disableKeyPressRef } = useContext(KeyboardVContext);
     const selectLetter = () => {
-        if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
+        if (disableKeyPressRef.current) {
+            return;
+        } else if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
             addLetter(keyVal);
         } else if (keyLine === 0) {
             removeLetter()

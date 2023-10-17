@@ -1,3 +1,7 @@
+:root {
+  --font-divisor: 60; /* Default value for the font divisor */
+}
+
 .App {
   text-align: center;
   background-color: white;
@@ -8,14 +12,14 @@
   height: calc(100vh - 200px);
   display: flex;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 10px;
   flex-direction: column;
 }
 
 .keyboard {
-  width: 950px;
+  width: 1000px;
   height: 750px;
-  margin-top: 50px;
+  margin-top: 20px;
   justify-content: center;
 }
 
@@ -34,16 +38,17 @@
 }
 
 .key {
-  width: 60px;
-  height: 60px;
+  position: relative;
+  width: 70px;
+  height: 70px;
   margin: 5px;
   border-radius: 6px;
-  border: 3px solid grey;
+  /* border: 3px solid grey; */
   display: grid;
   place-items: center;
-  font-size: 25px;
-  background-color: white;
-  color: grey;
+  font-size: 30px;
+  background-color: #aaa;
+  color: black;
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
@@ -52,8 +57,9 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
+  border: 3px solid #aaa;
   font-size: 28px;
-  border: 3px solid grey;
+  font-weight: 500;
   display: flex;
   justify-content: center;
   place-items: center;
@@ -61,15 +67,15 @@
   position: fixed;
   top: 15px;
   right: 15px;
-  background-color: white;
-  color: grey;
+  background-color: #aaa;
+  color: black;
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
 
 .dark_key {
-  border: 3px solid #444;
-  color: #444;
+  border: 3px solid #222;
+  color: #222;
 }
 
 .black_key {
@@ -78,27 +84,29 @@
 }
 
 .blank_key {
-  border: 3px solid #fff;
+  /* border: 3px solid #fff; */
+  background-color: white;
   cursor: default;
 }
 
 .mathsymbol_key {
-  border: 0px;
+  /* border: 0px; */
   color: black;
+  background-color: white;
   font-size: 40px;
   cursor: default;
 }
 
 .run_key {
-  border: 3px solid #fff;
   color: black;
-  font-size: 25px;
+  background-color: white;
   cursor: default;
 }
 
 .guess_key {
-  border: 3px solid #fff;
+  /* border: 3px solid #fff; */
   color: black;
+  background-color: white;
   font-size: 40px;
 }
 
@@ -117,10 +125,11 @@
 .spacebar {
   width: 360px;
   font-size: 36px;
+  background-color: #ccc;
 }
 
 #selected_key {
-  border: 3px solid #444444;
+  color: yellow;
 }
 
 .default_cursor {
@@ -263,7 +272,8 @@
   margin: 2px;
   border-radius: 3px;
   border: none;
-  font-size: 100%;
+  /* font-size: 120%; */
+  font-size: 1em;
   color: #222;
   cursor: default;
 }
@@ -312,14 +322,50 @@
 }
 
 .centered-text {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
   color: #000;
 }
 
 .bottom-text {
   font-size: 16px;
-  color: #666;
+  color: #000;
+}
+
+.centered-text-main {
+  font-size: 36px;
+  font-weight: bold;
+  color: #000;
+}
+
+.bottom-text-main {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
+
+.bottom-left-main {
+  position: absolute;
+  right: -10px;
+  bottom: -4px;
+  font-size: 22px;
+  color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-left-main-back {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgb(255, 248, 109);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes reveal {
@@ -335,7 +381,7 @@
   animation: reveal 0.4s ease forwards;
 }
 
-@keyframes flip {
+/* @keyframes flip {
   0% {
       transform: scaleY(1);
   }
@@ -345,40 +391,22 @@
   100% {
       transform: scaleY(1);
   }
-}
+} */
 
-.hexagon-fill {
+.anagram-fill {
   cursor: pointer;
-  fill: #f7da21;
-  transition: all 100ms;
-}
-
-.hexagon-blank {
-  cursor: default;
-  fill: #fff;
-  transition: all 100ms;
-}
-
-.hexagon-letter {
-  font-weight: 700;
-  font-size: 1.875em;
-  color: grey;
-  text-anchor: middle;
-  text-transform: uppercase;
-  pointer-events: none;
-}
-
-.hexagon-letter.hexagon-letter-grey {
-  color: grey;
-  font-weight: 300;
+  background-color: #f7da21;
 }
 
 @media only screen and ((max-width: 768px) or (max-height: 400px)) {
+  :root {
+    --font-divisor: 40; /* Adjust the divisor for smaller screens */
+  }
+
   .key {
     width: 30px;
     height: 30px;
     border-radius: 3px;
-    border: 2px solid grey;
     font-size: 15px;
     margin: 3px;
   }
@@ -391,26 +419,84 @@
     width: 20px;
     height: 20px;
     font-size: 16px;
-    border: 2px solid grey;
   }
-}
 
-.help-modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  padding: 20px;
-  background-color: white;
-  border: 2px solid #ccc;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
+  .centered-text-main {
+    font-size: 18px;
+    font-weight: 100;
+    color: #000;
+  }
+  
+  .bottom-text-main {
+    font-size: 6px;
+    color: #000;
+  }
 
-.help-modal-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
-  transition: backdrop-filter 0.3s ease-in-out;
+  .dark_key {
+    border: 1.5px solid #222;
+  }
+
+  .divider {
+    font-size: 28px;
+    width: 12px;
+    height: 24px;
+  }
+
+  .bottom-left-main {
+    position: absolute;
+    right: -6px;
+    bottom: -2px;
+    font-size: 14px;
+  }
+  
+  .bottom-left-main-back {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .centered-text {
+    font-size: 18px;
+  }
+  
+  .bottom-text {
+    font-size: 8px;
+  }
+
+  .mini_key {
+    width: 18px;
+    height: 18px;
+    margin: 1px;
+    border-radius: 2px;
+    border: 1px solid #444;
+    font-size: 12px;
+  }
+
+  .mini_divider {
+    font-size: 18px;
+    height: 16px;
+  }
+
+  .hundreds_key {
+    width: 28px;
+    height: 28px;
+    margin: 1px;
+    border-radius: 2px;
+    font-size: 1em;
+    max-width: 28px;
+    /* font-size: 80%; */
+  }
+
+  .triangle_key {
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+    margin: 0.5px;
+    border: 1.5px solid #444;
+    font-size: 16px;
+  }
 }
 
 .close-button {
@@ -429,3 +515,4 @@
   font-size: 16px;
   line-height: 1.5;
 }
+

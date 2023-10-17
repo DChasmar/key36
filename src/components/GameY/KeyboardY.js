@@ -181,7 +181,7 @@ function KeyboardY() {
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
-                return <Key keyVal={key} key={uniqueKey} keyLine={0} dark blank />;
+                return <Key keyVal={key} key={uniqueKey} keyLine={0} guessKey />;
             })}</div>
             <div className='line1'>{keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;

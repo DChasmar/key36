@@ -1,10 +1,16 @@
 import React, { useContext } from 'react'
 import { KeyboardWContext } from './KeyboardW';
 
-function Key({ keyVal, dark, color }) {
-  const { addLetter } = useContext(KeyboardWContext);
+function Key({ keyVal, dark, color, keyLine }) {
+  const { addLetter, removeLetter, disableKeyPressRef } = useContext(KeyboardWContext);
   const chooseKey = () => {
-    addLetter(keyVal);
+    if (disableKeyPressRef.current) {
+      return;
+    } else if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
+        addLetter(keyVal);
+    } else if (keyLine === 0) {
+        removeLetter()
+    };
   };
 
   let boxColor;

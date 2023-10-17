@@ -3,9 +3,11 @@ import { KeyboardZContext } from './KeyboardZ';
 import { GoDotFill } from '../IconModule';
 
 function Key({ keyVal, keyLine, guessKey, blankKey }) {
-    const { addLetter, removeLetter } = useContext(KeyboardZContext);
+    const { addLetter, removeLetter, disableKeyPressRef } = useContext(KeyboardZContext);
     const selectLetter = () => {
-        if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
+        if (disableKeyPressRef.current) {
+            return;
+        } else if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
             addLetter(keyVal);
         } else if (keyLine === 0) {
             removeLetter()

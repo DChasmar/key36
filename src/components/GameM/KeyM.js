@@ -3,12 +3,14 @@ import { KeyboardMContext } from './KeyboardM';
 import { GoDotFill } from '../IconModule';
 
 function Key({ keyVal, keyLine, guessKey, blankKey }) {
-  const { addLetter, removeLetter } = useContext(KeyboardMContext);
+  const { addLetter, removeLetter, disableKeyPressRef } = useContext(KeyboardMContext);
   const selectLetter = () => {
-    if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
-        addLetter(keyVal);
+    if (disableKeyPressRef.current) {
+      return;
+    } else if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
+      addLetter(keyVal);
     } else if (keyLine === 0) {
-        removeLetter()
+      removeLetter()
     };
   };
 

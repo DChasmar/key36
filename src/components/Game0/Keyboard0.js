@@ -194,14 +194,6 @@ function Keyboard0() {
           }
       }, [fauxKeys0, allKeys]);
 
-    // useEffect(() => {
-    //     document.addEventListener("keydown", handleKeyboard);
-
-    //     return () => {
-    //         document.removeEventListener("keydown", handleKeyboard);
-    //     };
-    // }, [handleKeyboard]);
-
     useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     return (
@@ -209,7 +201,8 @@ function Keyboard0() {
             <Keyboard0Context.Provider
                 value={{
                 addLetter,
-                removeLetter
+                removeLetter,
+                disableKeyPressRef
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;

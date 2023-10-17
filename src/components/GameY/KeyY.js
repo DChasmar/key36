@@ -9,11 +9,13 @@ import { FaStarHalf } from 'react-icons/fa';
 import { BiAngry } from 'react-icons/bi';
 
 
-function Key({ keyVal, dark, clickableKey, blank }) {
-  const { addNumber } = useContext(KeyboardYContext);
+function Key({ keyVal, keyLine, guessKey }) {
+  const { addLetter, removeLetter } = useContext(KeyboardYContext);
   const selectLetter = () => {
-    if (clickableKey) {
-      addNumber(keyVal);
+    if (keyLine === 1 || keyLine === 2 || keyLine === 3) {
+      addLetter(keyVal);
+    } else if (keyLine === 0) {
+      removeLetter();
     };
   };
 
@@ -64,7 +66,7 @@ function Key({ keyVal, dark, clickableKey, blank }) {
   };
 
   return (
-      <div className={ blank ? 'key run_key' : dark ? 'key dark_key' : 'key' } onClick={selectLetter}>
+      <div className={ guessKey ? 'key guess_key' : 'key' } onClick={selectLetter}>
         {iconComponent}
       </div>
     )

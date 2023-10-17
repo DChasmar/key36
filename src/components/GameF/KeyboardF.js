@@ -104,41 +104,6 @@ function KeyboardF() {
       setKeys0(updatedKeys);
     };
 
-    // const findKeyboardColors = (colorKeys, value) => {
-    //   setKeys1DordleColors(prevKeys1DordleColors => {
-    //     let newKeys1DordleColors = [...prevKeys1DordleColors];
-    //     for (let key of colorKeys) {
-    //       let index1 = keys1.indexOf(key.toUpperCase());
-    //       if (index1 !== -1) {
-    //         newKeys1DordleColors[index1] = value;
-    //       }
-    //     }
-    //     return newKeys1DordleColors;
-    //   });
-    
-    //   setKeys2DordleColors(prevKeys2DordleColors => {
-    //     let newKeys2DordleColors = [...prevKeys2DordleColors];
-    //     for (let key of colorKeys) {
-    //       let index2 = keys2.indexOf(key.toUpperCase());
-    //       if (index2 !== -1) {
-    //         newKeys2DordleColors[index2] = value;
-    //       }
-    //     }
-    //     return newKeys2DordleColors;
-    //   });
-    
-    //   setKeys3DordleColors(prevKeys3DordleColors => {
-    //     let newKeys3DordleColors = [...prevKeys3DordleColors];
-    //     for (let key of colorKeys) {
-    //       let index3 = keys3.indexOf(key.toUpperCase());
-    //       if (index3 !== -1) {
-    //         newKeys3DordleColors[index3] = value;
-    //       }
-    //     }
-    //     return newKeys3DordleColors;
-    //   });
-    // };
-
     const findKeyboardColors = (colorKeys, value) => {
         updateDordleColors(colorKeys, value, keys1, setKeys1DordleColors);
         updateDordleColors(colorKeys, value, keys2, setKeys2DordleColors);
@@ -413,14 +378,16 @@ function KeyboardF() {
             <KeyboardFContext.Provider
                 value={{
                 addLetter,
+                removeLetter,
                 guesses,
                 guessColors,
-                turnCounter}}>
+                turnCounter,
+                disableKeyPressRef}}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;
                 return (
                   <React.Fragment key={uniqueKey}>
-                  <Key keyVal={key} dark color={keys0DordleColors[index]} />
+                  <Key keyVal={key} dark color={keys0DordleColors[index]} keyLine={0} />
                   {index === 2 && turnCounter < 3 && <div className='divider'>|</div>}
                   </React.Fragment>
                 );
@@ -429,19 +396,19 @@ function KeyboardF() {
                 {keys1.map((key, index) => {
                 const uniqueKey = `1-${index}`;
                 return <Key keyVal={key} color={keys1DordleColors[index]} 
-                  key={uniqueKey} />;
+                  key={uniqueKey} keyLine={1} />;
             })}</div>
             <div className='line2'>
               {keys2.map((key, index) => {
               const uniqueKey = `2-${index}`;
               return <Key keyVal={key} color={keys2DordleColors[index]} 
-              key={uniqueKey}/>;
+              key={uniqueKey} keyLine={2} />;
               })}
             </div>
             <div className='line3'>{keys3.map((key, index) => {
               const uniqueKey = `3-${index}`;
                 return <Key keyVal={key} color={keys3DordleColors[index]} 
-                  key={uniqueKey} />;
+                  key={uniqueKey} keyLine={3} />;
                 })}
             </div>
             <div className='line4'>< Spacebar keyVal={symbolResponse} /></div>

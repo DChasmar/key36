@@ -170,7 +170,8 @@ function KeyboardM() {
                 value={{
                 addLetter,
                 removeLetter,
-                total
+                total,
+                disableKeyPressRef
                 }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`;

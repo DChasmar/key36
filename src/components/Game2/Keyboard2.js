@@ -201,14 +201,6 @@ function Keyboard2() {
         }
     });
 
-    // useEffect(() => {
-    //     document.addEventListener("keydown", handleKeyboard);
-
-    //     return () => {
-    //         document.removeEventListener("keydown", handleKeyboard);
-    //     };
-    // }, [handleKeyboard]);
-
     useKeydownEffect(handleKeyboard, [handleKeyboard]);
 
     // useEffect(() => {

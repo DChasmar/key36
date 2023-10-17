@@ -129,7 +129,8 @@ function Keyboard1() {
                 value={{
                 addLetter,
                 removeLetter,
-                checkWord}}>
+                disableKeyPressRef
+                }}>
             <div className='line0'>{keys0.map((key, index) => {
                 const uniqueKey = `0-${index}`; // Generate a unique key
                 return <Key keyVal={key} key={uniqueKey} keyLine={0} guessLine />;
