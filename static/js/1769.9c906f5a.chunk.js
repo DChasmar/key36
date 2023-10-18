@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkkey36=self.webpackChunkkey36||[]).push([[1769],{1769:function(e,c,a){a.r(c);a(2791);var k=a(184);c.default=function(e){var c,a=e.keyVal,n=e.color;return c=0===n?"#cccccc":1===n?"#d9d91e":2===n?"#67ae4d":"white",(0,k.jsx)("div",{className:"key mini_key",style:{backgroundColor:c},children:a})}}}]);
+//# sourceMappingURL=1769.9c906f5a.chunk.js.map

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkkey36=self.webpackChunkkey36||[]).push([[1566],{1566:function(s,e,r){r.r(e);r(2791);var u=r(9126),a=r(184);e.default=function(s){for(var e=s.tally,r=[],n=0;n<5;n++)n<e?r.push((0,a.jsx)(u.kRm,{},n)):r.push((0,a.jsx)(u.RrZ,{},n));return(0,a.jsx)("div",{className:"star-box",children:r})}}}]);
+//# sourceMappingURL=1566.c35a13ab.chunk.js.map

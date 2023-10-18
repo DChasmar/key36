@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkkey36=self.webpackChunkkey36||[]).push([[3113],{3113:function(e,c,s){s.r(c);var n=s(2791),o=s(5643),a=s(6355),l=s(184);c.default=function(e){var c=e.keyVal,s=(0,n.useContext)(o.I).setGameChosen,t=null,r="";return"check"===c?(t=(0,l.jsx)(a.l_A,{}),r="check-color"):"times"===c?(t=(0,l.jsx)(a.aHS,{}),r="times-color"):(t=c,c>0?r="check-color":c<0&&(r="times-color")),(0,l.jsx)("div",{className:"key spacebar ".concat(r),onClick:function(){s({gameChosen:!1,gameNumber:""})},children:t})}}}]);
+//# sourceMappingURL=3113.dacd8c0f.chunk.js.map
