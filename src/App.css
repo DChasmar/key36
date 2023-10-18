@@ -17,7 +17,7 @@
 }
 
 .keyboard {
-  width: 1000px;
+  width: 850px;
   height: 750px;
   margin-top: 20px;
   justify-content: center;
@@ -398,9 +398,127 @@
   background-color: #f7da21;
 }
 
-@media only screen and ((max-width: 768px) or (max-height: 400px)) {
+@media only screen and ((max-width: 924px)) {
+
+  .keyboard {
+    margin-top: 50px;
+  }
+}
+
+@media only screen and ((max-width: 768px)) {
+  :root {
+    --font-divisor: 50; /* Adjust the divisor for smaller screens */
+  }
+
+  .keyboard {
+    width: 600px;
+    height: 500px;
+    margin-top: 40px;
+  }
+
+  .key {
+    width: 50px;
+    height: 50px;
+    border-radius: 4.5px;
+    font-size: 23px;
+    margin: 4px;
+  }
+
+  .spacebar {
+    width: 270px;
+  }
+
+  .help {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+  }
+
+  .centered-text-main {
+    font-size: 24px;
+    font-weight: 100;
+  }
+  
+  .bottom-text-main {
+    font-size: 9px;
+  }
+
+  .dark_key {
+    border: 2px solid #222;
+  }
+
+  .divider {
+    font-size: 40px;
+    width: 18px;
+    height: 32px;
+  }
+
+  .bottom-left-main {
+    position: absolute;
+    right: -8px;
+    bottom: -4px;
+    font-size: 16px;
+  }
+  
+  .bottom-left-main-back {
+    position: absolute;
+    right: -6px;
+    bottom: -6px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .centered-text {
+    font-size: 24px;
+  }
+  
+  .bottom-text {
+    font-size: 12px;
+  }
+
+  .mini_key {
+    width: 24px;
+    height: 24px;
+    margin: 1.5px;
+    border-radius: 3px;
+    border: 1.5px solid #444;
+    font-size: 16px;
+  }
+
+  .mini_divider {
+    font-size: 24px;
+    height: 22px;
+  }
+
+  .hundreds_key {
+    width: 36px;
+    height: 36px;
+    margin: 1.5px;
+    border-radius: 3px;
+    font-size: 1em;
+    max-width: 36px;
+    /* font-size: 80%; */
+  }
+
+  .triangle_key {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    margin: 1px;
+    border: 2px solid #444;
+    font-size: 24px;
+  }
+}
+
+@media only screen and ((max-width: 576px)) {
   :root {
     --font-divisor: 40; /* Adjust the divisor for smaller screens */
+  }
+
+  .keyboard {
+    width: 375px;
+    height: 400px;
+    margin-top: 40px;
   }
 
   .key {

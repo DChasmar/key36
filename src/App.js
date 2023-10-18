@@ -33,6 +33,9 @@ function App() {
           <li>When you complete a game, the key on the homepage will turn blue.</li>
           <li>To return to the homepage, press the spacebar.</li>
         </ul>
+        <div>
+           
+        </div>
       </div>
     );
   

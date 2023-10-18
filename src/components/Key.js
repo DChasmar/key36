@@ -40,7 +40,7 @@ function Key({ keyVal, blue, game }) {
   return (
       <div>
         {/* <div className={blue ? 'key blue_key' : 'key'}  onClick={selectLetter}> */}
-        <div className='key reveal-tile' style={{backgroundColor: fillColor, border: '0px'}} onClick={selectLetter}>
+        <div className='key' style={{backgroundColor: fillColor, border: '0px'}} onClick={selectLetter}>
           {/* Centered text */}
           <div className="centered-text-main">{keyVal}</div>
           {/* Text in the bottom-right corner */}
