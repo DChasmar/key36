@@ -1,4 +1,4 @@
-import React, { useContext} from 'react'
+import React, { useContext } from 'react'
 import { AppContext } from '../App'
 import { FaCheck } from './IconModule';
 
@@ -14,7 +14,7 @@ function Key({ keyVal, blue, game }) {
   if (game === 'WORDS') {
     fillColor = '#aaa';
   } else if (game === 'SCRABBY') {
-    fillColor = '#EFC18D';
+    fillColor = '#efc18d';
   } else if (game === 'NUMBERS') {
     fillColor = '#d99916';
   } else if (game === 'MAZE') {

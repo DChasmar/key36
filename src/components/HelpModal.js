@@ -37,7 +37,7 @@ function HelpModal({ isOpen, onRequestClose, content }) {
             X
         </button>
         <div>
-            <h1>KEY 36</h1>
+            <h1>Key 36</h1>
             <div className="modal-text">{content}</div>
         </div>
       </div>
