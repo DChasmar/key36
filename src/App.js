@@ -40,7 +40,7 @@ function App() {
       { color: '#f7da21', title: 'Anagram:', description: 'Spell words of the desired length using all the yellow letters' },
       { color: '#89d5ff', title: 'Maze:', description: 'Connect all keys by connecting touching keys' },
       { color: '#e07ba1', title: 'Puzzle:', description: 'Solve the picture pun puzzle to complete the passage' },
-      { color: '#aaa', title: 'Words:', description: 'Make words' },
+      { color: '#888', title: 'Words:', description: 'Make words' },
       { color: '#d99916', title: 'Numbers:', description: 'Do math' },
     ];
 

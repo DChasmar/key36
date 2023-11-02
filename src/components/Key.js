@@ -12,7 +12,7 @@ function Key({ keyVal, blue, game }) {
   let fillColor = null;
 
   if (game === 'WORDS') {
-    fillColor = '#aaa';
+    fillColor = '#888';
   } else if (game === 'SCRABBY') {
     fillColor = '#efc18d';
   } else if (game === 'NUMBERS') {
